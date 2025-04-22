@@ -56,6 +56,12 @@ function p(text) {
     return item;
 }
 
+function article() {
+    let item = document.createElement('article');
+    return item;
+}
+
+
 function address(lines) {
     let address = document.createElement('address');
     lines.forEach(line => {
@@ -79,17 +85,12 @@ function doHeader($body) {
     let $header = document.createElement('header');
 
     let $logo = img("/logo.jpg", COMPANY.slogan);
-    $logo.addEventListener("click", function () { window.location.href = 'index.html' + window.location.search; });
+    $logo.addEventListener("click", function () { window.location.href = '/index.html' + window.location.search; });
 
     $header.append($logo);
     $body.insertBefore($header, $body.firstChild);
 
-    (async function () {
-        let metaDesc = document.createElement('meta');
-        metaDesc.name = 'description';
-        metaDesc.content = COMPANY.description;
-        document.head.append(metaDesc);
-    })();
+    updateHtmlDesc(COMPANY.description);
 
     document.getElementById('loading').remove();
 
@@ -116,9 +117,7 @@ function doHeader($body) {
         $story.style.fontWeight = 'bold';
     }
 
-    $menu.append($about);
-    $menu.append($products);
-    $menu.append($story);
+    $menu.append($about, $products, $story);
     $nav.append($menu);
 
     $body.append($nav);
@@ -128,16 +127,12 @@ function doHeader($body) {
 
 function doFooter($body) {
     let $footer = document.createElement('footer');
-    $footer.append(address(COMPANY.address));
-    $footer.append(link('tel:' + COMPANY.phone.replace(/ /g, ''), COMPANY.phone));
-    $footer.append(link('mailto:' + COMPANY.email, COMPANY.email));
-    $footer.append(br());
-    $footer.append(em(COMPANY.legalName));
-    $footer.append(em(COMPANY.taxOffice + ' vergi dairesi '));
-    $footer.append(em(COMPANY.taxNumber + ' numaralı mükellef'));
-    $footer.append(br());
-    $footer.append(em(COMPANY.bankName));
-    $footer.append(em(COMPANY.iban));
+    $footer.append(address(COMPANY.address),
+        link('tel:' + COMPANY.phone.replace(/ /g, ''), COMPANY.phone), link('mailto:' + COMPANY.email, COMPANY.email),
+        br(),
+        em(COMPANY.legalName), em(COMPANY.taxOffice + ' vergi dairesi '), em(COMPANY.taxNumber + ' numaralı mükellef'),
+        br(),
+        em(COMPANY.bankName), em(COMPANY.iban));
     $body.append($footer);
     return $footer;
 }
@@ -276,6 +271,20 @@ function addToBasket(product, quantity = 1) {
     updateTotal();
 }
 
+function updateHtmlDesc(htmlDesc) {
+    (async function () {
+        let existingMetaDesc = document.querySelector('meta[name="description"]');
+        if (existingMetaDesc) {
+            existingMetaDesc.content = htmlDesc;
+        } else {
+            let metaDesc = document.createElement('meta');
+            metaDesc.name = 'description';
+            metaDesc.content = htmlDesc;
+            document.head.append(metaDesc);
+        }
+    })();
+}
+
 function doProduct(product, isLinked = true) {
     let $product = document.createElement('li');
     $product.dataset.id = product.id;
@@ -296,6 +305,9 @@ function doProduct(product, isLinked = true) {
         $img.addEventListener('click', fnClick);
         $name.addEventListener('click', fnClick);
     }
+    else {
+        updateHtmlDesc(product.metaDesc);
+    }
 
     let $price = document.createElement('strong');
     $price.textContent = `${product.price} TL (KDV Dahil)`;
@@ -314,23 +326,23 @@ function doProduct(product, isLinked = true) {
 }
 
 function doProducts($body, isRandom = true) {
-    let $products = document.createElement('ol');
+    let $products = document.createElement('ul');
     $products.id = 'products';
 
     let items = PRODUCTS;
     if (isRandom) {
         items = PRODUCTS.sort(() => 0.5 - Math.random()).slice(0, 3);
     }
+
     items.forEach(product => {
-        let $product = doProduct(product);
-        $products.append($product);
+        $products.append(doProduct(product));
     });
 
     $body.append($products);
 }
 
 function doAbout($main) {
-    let $article = document.createElement('article');
+    let $article = article();
 
     COMPANY.about.forEach(item => {
         let $title = h2(item.title);
@@ -388,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let story = getData("erzincan").story;
 
-        let $article = document.createElement('article');
+        let $article = article();
         let $title = h2('Lezzetimizin Hikayesi');
         $article.append($title);
 
@@ -396,8 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $article.append($img);
 
         story.forEach(item => {
-            let $storyTitle = h2(item.title);
-            $article.append($storyTitle);
+            $article.append(h2(item.title));
             let $storyContent = p(item.content.join(' '));
             $storyContent.style.textAlign = 'justify';
             $article.append($storyContent);
@@ -415,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let productName = window.location.href.split('/').pop().split('.')[0];
         let product = PRODUCTS.find(p => p.urlName === productName);
         if (product) {
-            let $article = document.createElement('article');
+            let $article = article();
             $article.classList.add('prd');
 
             let $product = doProduct(product, false);
@@ -442,9 +453,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let queryString = window.location.search;
         let params = new URLSearchParams(queryString);
         for (let [key, value] of params.entries()) {
-            let quantity = parseInt(value);
             let product = PRODUCTS.find(p => p.id === key);
-            if (product) { addToBasket(doProduct(product), quantity); }
+            if (product) {
+                let quantity = parseInt(value);
+                addToBasket(doProduct(product), quantity);
+            }
         }
     }, 987);
 });

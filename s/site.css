@@ -158,6 +158,7 @@ article img {
 
 p {
     margin-bottom: 15px;
+    padding: 5px;
 }
 
 #basket {
@@ -307,6 +308,7 @@ h3 {
     object-fit: cover;
     height: 444px;
 }
+
 
 @media (max-width: 768px) {
     #products {

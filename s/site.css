@@ -185,14 +185,16 @@ p {
     margin-top: 21px;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 #basket ul li button {
     display: inline-block;
     background-color: #f14f4f;
-    padding: 8px;
+    padding-inline: 5px;
+    padding-block: 1px;
     margin-inline: 13px;
-    font-size: 13px;
+    font-size: 19px;
 }
 
 .btnDelete {
@@ -202,6 +204,11 @@ p {
 }
 
 .btnAddToBasket {
+    margin: 5px;
+}
+
+.prd .btnAddToBasket {
+    margin-top: 13px;
     margin-bottom: 21px;
 }
 
@@ -263,7 +270,7 @@ h3 {
     justify-content: center;
     grid-template-columns: repeat(3, 1fr);
     padding: 34px;
-    padding-top: 13px;
+    padding-top: 55px;
 }
 
 #products:has(> li:nth-child(1):nth-last-child(1)) {
@@ -275,13 +282,16 @@ h3 {
     cursor: pointer;
 }
 
-#products strong, .prd strong {
+#products strong,
+.prd strong {
     color: #4CAF50;
     font-weight: bold;
+    display: block;
+    margin: 5px;
 }
 
 #products img {
-    width: 222px;
+    width: 190px;
     margin: 13px;
     border-radius: 21px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -289,6 +299,7 @@ h3 {
 
 .prd {
     text-align: center;
+    padding-top: 8px;
 }
 
 .prd img {
@@ -300,10 +311,23 @@ h3 {
 @media (max-width: 768px) {
     #products {
         grid-template-columns: 1fr;
+        padding: 34px;
     }
 
     #products img {
         margin-top: 34px;
+        width: 80%;
+    }
+
+    .prd {
+        margin-top: -18px;
+        padding-top: 0;
+        display: inline-block;
+    }
+
+    .prd img {
+        width: 90%;
+        height: 333px;
     }
 
     nav {
@@ -313,9 +337,19 @@ h3 {
     menu li {
         display: block;
         margin: 10px 0;
+        padding: 5px;
+    }
+
+    main h3 {
+        margin-top: -21px;
+        display: inline-block;
     }
 
     .btnAddToBasket {
-        margin-bottom: 5px;
+        margin: 5px;
+    }
+
+    .prd .btnAddToBasket {
+        margin: 13px;
     }
 }

@@ -50,9 +50,12 @@ function h3(text) {
     return item;
 }
 
-function p(text) {
+function p(text, isJustify = false) {
     let item = document.createElement('p');
     item.textContent = text;
+    if (isJustify) {
+        item.style.textAlign = 'justify';
+    }
     return item;
 }
 
@@ -71,9 +74,7 @@ function address(lines) {
     return address;
 }
 
-function br() {
-    return document.createElement('br');
-}
+function br() { return document.createElement('br'); }
 
 function btn(text) {
     let btn = document.createElement('button');
@@ -86,7 +87,6 @@ function doHeader($body) {
 
     let $logo = img("/logo.jpg", COMPANY.slogan);
     $logo.addEventListener("click", function () { window.location.href = '/index.html' + window.location.search; });
-
     $header.append($logo);
     $body.insertBefore($header, $body.firstChild);
 
@@ -97,22 +97,25 @@ function doHeader($body) {
     let $nav = document.createElement('nav');
     let $menu = document.createElement('menu');
     let $about = li('Hakımızda');
-    $about.addEventListener("click", function () { window.location.href = '/hakkimizda.html' + window.location.search; });
-    if (window.location.href.includes('hakkimizda.html')) {
+    $about.dataset.url = '/hakkimizda.html';
+    $about.addEventListener("click", function () { window.location.href = $about.dataset.url + window.location.search; });
+    if (window.location.href.includes($about.dataset.url)) {
         $about.style.textDecoration = 'underline';
         $about.style.fontWeight = 'bold';
     }
 
     let $products = li('Ürünlerimiz');
-    $products.addEventListener("click", function () { window.location.href = '/urunlerimiz.html' + window.location.search; });
+    $products.dataset.url = '/urunlerimiz.html';
+    $products.addEventListener("click", function () { window.location.href = $products.dataset.url + window.location.search; });
     if (window.location.href.includes('urunlerimiz.html')) {
         $products.style.textDecoration = 'underline';
         $products.style.fontWeight = 'bold';
     }
 
     let $story = li('Lezzetimizin Hikayesi');
-    $story.addEventListener("click", function () { window.location.href = '/lezzetimizin-hikayesi.html' + window.location.search; });
-    if (window.location.href.includes('lezzetimizin-hikayesi.html')) {
+    $story.dataset.url = '/lezzetimizin-hikayesi.html';
+    $story.addEventListener("click", function () { window.location.href = $story.dataset.url + window.location.search; });
+    if (window.location.href.includes($story.dataset.url)) {
         $story.style.textDecoration = 'underline';
         $story.style.fontWeight = 'bold';
     }
@@ -146,7 +149,7 @@ function showBasket($basket, $btnShowBasket) {
 function hideBasket($basket, $btnShowBasket) {
     $btnShowBasket.dataset.active = 'false';
     $btnShowBasket.innerHTML = 'Sepeti Göster';
-    $basket.style.height = IS_MOBILE ? "180px" : "130px";
+    $basket.style.height = IS_MOBILE ? "222px" : "150px";
 }
 
 function doBasket($body, $footer) {
@@ -224,8 +227,10 @@ function addToBasket(product, quantity = 1) {
     }
 
     product.querySelector("button").remove();
-    product.querySelector("p").remove();
-
+    if (product.querySelector("p")) {
+        product.querySelector("p").remove();
+    }
+    
     let $deleteButton = btn("x");
     $deleteButton.classList.add("btnDelete");
     $deleteButton.addEventListener("click", function () {
@@ -233,9 +238,11 @@ function addToBasket(product, quantity = 1) {
         updateTotal();
     });
 
-    insertAfter(product.querySelector("img"), $deleteButton);
+    let $img = product.querySelector('img');    
+    insertAfter($img, $deleteButton);
 
     let $h2 = product.querySelector('h2');
+    $h2.removeEventListener('click', fnClick);
     let $price = product.querySelector('strong');
     $price.textContent = formatPrice(product.dataset.price);
 
@@ -285,6 +292,10 @@ function updateHtmlDesc(htmlDesc) {
     })();
 }
 
+let fnClick = function () {
+    window.location.href = '/organik-urunler/' + this.dataset.url + '.html' + window.location.search;
+};
+
 function doProduct(product, isLinked = true) {
     let $product = document.createElement('li');
     $product.dataset.id = product.id;
@@ -293,32 +304,33 @@ function doProduct(product, isLinked = true) {
 
     let $img = img('', product.name);
     $img.src = '/organik-urunler/' + product.urlName + '.jpg';
+    $img.dataset.url = product.urlName;
     $product.append($img);
 
     let $name = h2(product.name);
+    $name.dataset.url = product.urlName;
     $product.append($name);
-
-    if (isLinked) {
-        let fnClick = function () {
-            window.location.href = '/organik-urunler/' + product.urlName + '.html' + window.location.search;
-        };
-        $img.addEventListener('click', fnClick);
-        $name.addEventListener('click', fnClick);
-    }
-    else {
-        updateHtmlDesc(product.metaDesc);
-    }
 
     let $price = document.createElement('strong');
     $price.textContent = `${product.price} TL (KDV Dahil)`;
     $product.append($price);
 
-    $product.append(p(product.shortDesc));
+    if (isLinked) {        
+        $img.addEventListener('click', fnClick);
+        $name.addEventListener('click', fnClick);
+        $product.append(p(product.shortDesc));
+    }
+    else {
+        updateHtmlDesc(product.metaDesc);
+
+        document.querySelector('main h3').remove();
+    }
 
     let $btn = btn('Sepete Ekle');
     $btn.className = 'btnAddToBasket';
     $btn.addEventListener("click", function () {
         addToBasket(this.parentElement.cloneNode(true));
+        window.location.href = window.location.pathname + window.location.search + '#basket';
     });
     $product.append($btn);
 
@@ -355,9 +367,7 @@ function doAbout($main) {
     return $article;
 }
 
-function formatPrice(price) {
-    return price.toLocaleString("tr-TR") + " TL";
-}
+function formatPrice(price) { return price.toLocaleString("tr-TR") + " TL"; }
 
 function updateTotal() {
     let $totalPrice = document.getElementById('totalPrice');
@@ -401,25 +411,18 @@ document.addEventListener('DOMContentLoaded', function () {
         let story = getData("erzincan").story;
 
         let $article = article();
-        let $title = h2('Lezzetimizin Hikayesi');
-        $article.append($title);
-
-        let $img = img('/img/erzincan.jpg', 'Erzincan Yaylalarının Lezzeti');
-        $article.append($img);
+        $article.append(h2('Lezzetimizin Hikayesi'));
+        $article.append(img('/img/erzincan.jpg', 'Erzincan Yaylalarının Lezzeti'));
 
         story.forEach(item => {
             $article.append(h2(item.title));
-            let $storyContent = p(item.content.join(' '));
-            $storyContent.style.textAlign = 'justify';
-            $article.append($storyContent);
+            $article.append(p(item.content.join(' '), true));
         });
 
         $main.append($article);
     }
 
-    if (window.location.href.includes('hakkimizda.html')) {
-        doAbout($main);
-    }
+    if (window.location.href.includes('hakkimizda.html')) { doAbout($main); }
 
     if (window.location.href.includes('/organik-urunler/')) {
 
@@ -431,10 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let $product = doProduct(product, false);
             $article.append($product);
-
-            let $longDesc = p(product.longDesc.join(' '));
-            $longDesc.style.textAlign = 'justify';
-            $article.append($longDesc);
+            $article.append(p(product.longDesc.join(' '), true));
 
             $main.append($article);
         } else {
@@ -442,12 +442,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (window.location.href.includes('urunlerimiz.html')) {
-        let $products = doProducts($main, false);
-    }
-    else {
-        let $products = doProducts($main);
-    }
+    if (window.location.href.includes('urunlerimiz.html')) { doProducts($main, false); }
+    else { doProducts($main); }
 
     setTimeout(function () {
         let queryString = window.location.search;

@@ -32,6 +32,10 @@ function em(text) {
     return item;
 }
 
+function div() {
+    return document.createElement("div");
+}
+
 function li(text) {
     let item = document.createElement("li");
     item.textContent = text;
@@ -83,6 +87,7 @@ function btn(text) {
 
 function rmv(id) { rmv2(document.querySelector(id)); }
 function rmv2(element) { if (element) { element.remove(); } }
+function rmv3(elements) { elements.forEach(function (e) { e.remove(); }); }
 
 function menuItem(name, url) {
     let $item = li(name);
@@ -99,6 +104,7 @@ function doHeader($body) {
     let $header = document.createElement("header");
 
     let $logo = img("/logo.jpg", COMPANY.slogan);
+    $logo.className = "logo";
     $logo.addEventListener("click", function () { window.location.href = "/index.html" + window.location.search; });
     $header.append($logo);
     $body.insertBefore($header, $body.firstChild);
@@ -109,6 +115,7 @@ function doHeader($body) {
     let $nav = document.createElement("nav");
     let $menu = document.createElement("menu");
     $menu.append(
+        //menuItem("☰", "#"),
         menuItem("Hakımızda", "/hakkimizda.html"),
         menuItem("Ürünlerimiz", "/urunlerimiz.html"),
         menuItem("Lezzetimizin Hikayesi", "/lezzetimizin-hikayesi.html"));
@@ -119,14 +126,38 @@ function doHeader($body) {
     return $header;
 }
 
+function imgWithBtn(src, btnText, url) {
+    if (url === undefined) { url = "/urunlerimiz.html"; }
+
+    let $img = img(src, COMPANY.slogan);
+    let $btn = btn(btnText);
+    $btn.addEventListener("click", function () {
+        window.location.href = url + window.location.search;
+    });
+    let $div = div();
+    $div.className = "bigImg";
+    $div.append($img, $btn);
+    return $div;
+}
+
+
 function doFooter($body) {
     let $footer = document.createElement("footer");
+    let part = imgWithBtn("/img/kahvaltilik-2.jpg", "Ürünlerimizi Görün");
+    $footer.append(part);
+
     $footer.append(address(COMPANY.address),
         lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone), lnk("mailto:" + COMPANY.email, COMPANY.email),
-        br(),
-        em(COMPANY.legalName), em(COMPANY.taxOffice + " vergi dairesi "), em(COMPANY.taxNumber + " numaralı mükellef"),
-        br(),
-        em(COMPANY.bankName), em(COMPANY.iban));
+        br());
+
+
+    const currentYear = new Date().getFullYear();
+    $footer.append(p(COMPANY.name + " © " + currentYear));
+    let $logo = img("/logo.jpg", COMPANY.slogan);
+    $logo.className = "logo";
+    $footer.append($logo);
+
+
     $body.append($footer);
     return $footer;
 }
@@ -140,7 +171,7 @@ function showBasket(basket, btnShow) {
 function hideBasket(basket, btnShow) {
     btnShow.dataset.active = "false";
     btnShow.innerHTML = "Sepeti Göster";
-    basket.style.height = IS_MOBILE ? "245px" : "160px";
+    basket.style.height = IS_MOBILE ? "230px" : "160px";
 }
 
 function doBasket($body, $footer) {
@@ -160,9 +191,16 @@ function doBasket($body, $footer) {
 
     $basket.append(document.createElement("ul"));
 
-    let $totalPrice = p("KDV Dahil Toplam : 0 TL");
+    let $totalPrice = p("Ürün Tutarı: 0 TL");
     $totalPrice.id = "totalPrice";
     $basket.appendChild($totalPrice);
+
+    let $cargo = p("Kargo Ücreti: 150 TL");
+    $basket.appendChild($cargo);
+
+    let $total = p("Genel Toplam: 150 TL");
+    $total.id = "total";
+    $basket.appendChild($total);
 
     let $btnOrderFromWhatsapp = btn("Whatsapp'dan Siparişini İlet");
     $btnOrderFromWhatsapp.id = "btnOrderFromWhatsapp";
@@ -196,7 +234,8 @@ function basketAdder(previousElement, prdId, price, quantity) {
     let unitPrice = parseFloat(price);
     let $quantity = em(quantity + " Adet");
 
-    let $minusButton = btn("-");
+    let $minusButton = btn("⚊");
+    $minusButton.style.visibility = "hidden";
     let $plusButton = btn("+");
 
     $minusButton.addEventListener("click", function () {
@@ -205,7 +244,11 @@ function basketAdder(previousElement, prdId, price, quantity) {
             $quantity.textContent = `${--quantity} Adet`;
             let $price = document.querySelector(priceKey);
             $price.textContent = formatPrice(unitPrice * quantity);
-            updateTotal();            
+            updateTotal();
+        }
+
+        if (quantity <= 1) {
+            this.style.visibility = "hidden";
         }
     });
 
@@ -215,6 +258,7 @@ function basketAdder(previousElement, prdId, price, quantity) {
         let $price = document.querySelector(priceKey);
         $price.textContent = formatPrice(unitPrice * quantity);
         updateTotal();
+        $minusButton.style.visibility = "visible";
     });
 
     insertAfter(previousElement, $plusButton);
@@ -242,9 +286,9 @@ function addToBasket(product, quantity = 1) {
     }
 
     rmv2(product.querySelector("button"));
-    rmv2(product.querySelector("p"));
+    rmv3(product.querySelectorAll("p"));
 
-    let $deleteButton = btn("x");
+    let $deleteButton = btn("🞨");
     $deleteButton.classList.add("btnDelete");
     $deleteButton.addEventListener("click", function () {
         rmv2(product);
@@ -318,7 +362,7 @@ function doProduct(product, isLinked = true) {
     $btn.addEventListener("click", function () {
         this.style.visibility = "hidden";
         insertAfter(this, p("Sepete Eklendi"));
-        addToBasket(this.parentElement.cloneNode(true));       
+        addToBasket(this.parentElement.cloneNode(true));
         this.remove();
     });
     $product.append($btn);
@@ -356,6 +400,7 @@ function formatPrice(price) { return price.toLocaleString("tr-TR") + " TL"; }
 
 function updateTotal() {
     let $totalPrice = document.getElementById("totalPrice");
+    let $total = document.getElementById("total");
     let $basket = document.getElementById("basket");
     let $products = $basket.querySelectorAll("li");
 
@@ -370,7 +415,10 @@ function updateTotal() {
         let price = parseFloat(priceText.replace(/\D/g, ""));
         total += price;
     });
-    $totalPrice.textContent = "KDV Dahil Toplam : " + formatPrice(total);
+
+    $totalPrice.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
+    total += 150;
+    $total.textContent = "Genel Toplam : " + formatPrice(total);
 
     let queryString = queryParams.join("&");
     history.replaceState(null, "", `?${queryString}`);
@@ -385,6 +433,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let $body = document.body;
     let $header = doHeader($body);
+
+    if (window.location.pathname == "/" || window.location.pathname.includes("/index.html")) {
+        let part = imgWithBtn("/img/kahvaltilik-1.jpg", "Ürünlerimizi Görün");
+        if (IS_MOBILE) {
+            part.style.marginTop = "-125px";
+        }
+        else {
+            part.style.marginTop = "-50px";
+        }
+        $body.append(part);
+    }
+
     let $main = document.createElement("main");
     $main.append(h3(COMPANY.slogan));
     $body.append($main);

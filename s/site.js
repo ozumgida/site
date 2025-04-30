@@ -129,21 +129,24 @@ function doHeader($body) {
     let $nav = document.createElement("nav");
     let $menu = document.createElement("menu");
 
-    let m = li("☰");
+
+
+    let $icon = img("/img/menu.png", "Menü");
+
+    let m = li("");
+    m.append($icon);
     m.dataset.open = "false";
-    m.style.fontSize = "24px";
-    m.style.fontWeight = "bold";
     m.style.cursor = "pointer";
     m.style.paddingBottom = 0;
     m.addEventListener("click", function () {
         if (this.dataset.open == "true") {
             this.dataset.open = "false";
-            this.innerText = "☰";
+            this.firstElementChild.src = "/img/menu.png";
             this.parentElement.querySelectorAll("li").forEach(function (item) { item.className = "close" });
         }
         else {
             this.dataset.open = "true";
-            this.innerText = "🞨";
+            this.firstElementChild.src = "/img/close.png";
             this.parentElement.querySelectorAll("li").forEach(function (item) { item.className = "" });
         }
         this.className = "";
@@ -159,6 +162,10 @@ function doHeader($body) {
         m2.className = "close";
         m3.className = "close";
         m4.className = "close";
+
+        if (IS_HOME) {
+            $nav.style.height = "133px";
+        }
     }
 
     $menu.append(m1, m2, m3, m4);
@@ -204,8 +211,8 @@ function doFooter($body) {
         br(), br(), $div, br(), $logo,
         p(COMPANY.name + " © " + currentYear),
         lnk("#", "Uzaktan Satış Sözleşmesi"),
-        lnk("#", "Kişisel Verilerinizin Korunması Sözleşmesi"),
-        lnk("/site-haritasi.html", "Site Haritası"), br());
+        lnk("#", "Kişisel Verilerinizin Korunması Sözleşmesi"), br(),
+        lnk("/site-haritasi.html", "Site Haritası"), br(), br());
 
     $body.append($footer);
     return $footer;
@@ -337,7 +344,7 @@ function addToBasket(product, quantity = 1) {
     rmv2(product.querySelector("button"));
     rmv3(product.querySelectorAll("p"));
 
-    let $deleteButton = btn("🞨");
+    let $deleteButton = btn("X");
     $deleteButton.classList.add("btnDelete");
     $deleteButton.addEventListener("click", function () {
         rmv2(product);
@@ -510,6 +517,7 @@ function updateTotal() {
 var PRODUCTS = [];
 var COMPANY = [];
 var IS_MOBILE = /Mobi|Android/i.test(navigator.userAgent);
+var IS_HOME = window.location.pathname == "/" || window.location.pathname.includes("/index.html");
 document.addEventListener("DOMContentLoaded", function () {
     COMPANY = getData("company");
     PRODUCTS = getData("products");
@@ -517,7 +525,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let $body = document.body;
     let $header = doHeader($body);
 
-    if (window.location.pathname == "/" || window.location.pathname.includes("/index.html")) {
+    if (IS_HOME) {
         let part = imgWithBtn("/img/kahvaltilik-1.jpg", "Ürünlerimizi Görün");
         if (IS_MOBILE) {
             part.style.marginTop = "-125px";

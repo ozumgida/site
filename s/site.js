@@ -12,10 +12,14 @@ function getData(data) {
     }
 }
 
-function lnk(href, text) {
+function lnk(href, text, isBlank = false) {
     let item = document.createElement("a");
     item.href = href;
     item.textContent = text;
+    if (isBlank) {
+        item.target = "_blank";
+        item.rel = "noopener noreferrer";
+    }
     return item;
 }
 
@@ -23,6 +27,16 @@ function img(src, text) {
     let item = document.createElement("img");
     item.src = src;
     item.alt = item.title = text;
+    return item;
+}
+
+function lnkimg(href, src, title) {
+    let item = document.createElement("a");
+    item.href = href;
+    item.target = "_blank";
+    item.rel = "noopener noreferrer";
+    let $img = img(src, title);
+    item.append($img);
     return item;
 }
 
@@ -114,11 +128,40 @@ function doHeader($body) {
 
     let $nav = document.createElement("nav");
     let $menu = document.createElement("menu");
-    $menu.append(
-        //menuItem("☰", "#"),
-        menuItem("Hakımızda", "/hakkimizda.html"),
-        menuItem("Ürünlerimiz", "/urunlerimiz.html"),
-        menuItem("Lezzetimizin Hikayesi", "/lezzetimizin-hikayesi.html"));
+
+    let m = li("☰");
+    m.dataset.open = "false";
+    m.style.fontSize = "24px";
+    m.style.fontWeight = "bold";
+    m.style.cursor = "pointer";
+    m.style.paddingBottom = 0;
+    m.addEventListener("click", function () {
+        if (this.dataset.open == "true") {
+            this.dataset.open = "false";
+            this.innerText = "☰";
+            this.parentElement.querySelectorAll("li").forEach(function (item) { item.className = "close" });
+        }
+        else {
+            this.dataset.open = "true";
+            this.innerText = "🞨";
+            this.parentElement.querySelectorAll("li").forEach(function (item) { item.className = "" });
+        }
+        this.className = "";
+    });
+
+    let m1 = menuItem("Hakımızda", "/hakkimizda.html");
+    let m2 = menuItem("Ürünlerimiz", "/urunlerimiz.html");
+    let m3 = menuItem("Lezzetimizin Hikayesi", "/lezzetimizin-hikayesi.html");
+    let m4 = menuItem("İletişim", "/iletisim.html");
+    if (IS_MOBILE) {
+        $menu.append(m);
+        m1.className = "close";
+        m2.className = "close";
+        m3.className = "close";
+        m4.className = "close";
+    }
+
+    $menu.append(m1, m2, m3, m4);
     $nav.append($menu);
 
     $body.append($nav);
@@ -140,23 +183,29 @@ function imgWithBtn(src, btnText, url) {
     return $div;
 }
 
-
 function doFooter($body) {
     let $footer = document.createElement("footer");
     let part = imgWithBtn("/img/kahvaltilik-2.jpg", "Ürünlerimizi Görün");
     $footer.append(part);
 
-    $footer.append(address(COMPANY.address),
-        lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone), lnk("mailto:" + COMPANY.email, COMPANY.email),
-        br());
+    let $div = div();
+    $div.className = "social";
+    $div.append(lnkimg(COMPANY.instagram, "/img/instagram.png", "instagram"),
+        lnkimg(COMPANY.facebook, "/img/facebook.png", "facebook"),
+        lnkimg(COMPANY.youtube, "/img/youtube.png", "youtube"));
 
-
-    const currentYear = new Date().getFullYear();
-    $footer.append(p(COMPANY.name + " © " + currentYear));
     let $logo = img("/logo.jpg", COMPANY.slogan);
     $logo.className = "logo";
-    $footer.append($logo);
+    let currentYear = new Date().getFullYear();
 
+    $footer.append(
+        address(COMPANY.address),
+        lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone), lnk("mailto:" + COMPANY.email, COMPANY.email),
+        br(), br(), $div, br(), $logo,
+        p(COMPANY.name + " © " + currentYear),
+        lnk("#", "Uzaktan Satış Sözleşmesi"),
+        lnk("#", "Kişisel Verilerinizin Korunması Sözleşmesi"),
+        lnk("/site-haritasi.html", "Site Haritası"), br());
 
     $body.append($footer);
     return $footer;
@@ -386,10 +435,44 @@ function doProducts($body, isRandom = true) {
 function doAbout($main) {
     let $article = article();
 
+    $article.append(h2("Hakkımızda"));
+    $article.append(img("/img/hakkimizda.jpg", COMPANY.name));
+
     COMPANY.about.forEach(item => {
         $article.append(h2(item.title));
         $article.append(p(item.content.join(" ")));
     });
+
+    $main.append($article);
+
+    return $article;
+}
+
+function doIletisim($main) {
+    let $article = article();
+
+    $article.append(h2("İletişim"),
+        img("/img/iletisim.jpg", COMPANY.name),
+        address(COMPANY.address),
+        lnk("https://maps.app.goo.gl/4mFyGQx7jfX2S2vh7", "Haritada Gör", true), br(),
+        lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone),
+        lnk("mailto:" + COMPANY.email, COMPANY.email), br());
+
+    $main.append($article);
+
+    return $article;
+}
+
+function doSiteHaritasi($main) {
+    let $article = article();
+
+    $article.append(h2("Site Haritası"), br(),
+        lnk("/index.html", "Anasayfa"),
+        lnk("/urunlerimiz.html", "Ürünlerimiz"),
+        lnk("/lezzetimizin-hikayesi.html", "Lezzetimizin Hikayesi"),
+        lnk("/hakkimizda.html", "Hakkımızda"),
+        lnk("/iletisim.html", "İletişim"),
+        br());
 
     $main.append($article);
 
@@ -456,7 +539,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let $article = article();
         $article.append(h2("Lezzetimizin Hikayesi"));
-        $article.append(img("/img/erzincan.jpg", "Erzincan Yaylalarının Lezzeti"));
+        $article.append(img("/img/lezzetimizin-hikayesi.jpg", "Erzincan Yaylalarının Lezzeti"));
 
         story.forEach(item => {
             $article.append(h2(item.title));
@@ -466,7 +549,9 @@ document.addEventListener("DOMContentLoaded", function () {
         $main.append($article);
     }
 
-    if (window.location.href.includes("hakkimizda.html")) { doAbout($main); }
+    if (window.location.href.includes("/hakkimizda.html")) { doAbout($main); }
+    if (window.location.href.includes("/iletisim.html")) { doIletisim($main); }
+    if (window.location.href.includes("/site-haritasi.html")) { doSiteHaritasi($main); }
 
     if (window.location.href.includes("/organik-urunler/")) {
         let productName = window.location.href.split("/").pop().split(".")[0];

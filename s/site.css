@@ -226,7 +226,7 @@ button {
     padding: 13px;
     padding-right: 21px;
     padding-left: 21px;
-    border-radius: 18px;
+    border-radius: 13px;
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -242,7 +242,7 @@ button {
     color: #222;
 }
 
-#totalPrice {
+#pTotal {
     margin: 34px auto;
     display: block;
 }
@@ -344,7 +344,7 @@ footer .bigImg img {
 
 .bigImg button {
     position: relative;
-    top: -189px;
+    top: -123px;
     margin: 0 auto;
     background-color: #2bbbfc;
     font-size: 24px;
@@ -365,6 +365,34 @@ article a {
     display: inline-flex;
     justify-content: center;
     gap: 13px;
+}
+
+#basketInfo {
+    position: fixed;
+    top: 66px;
+    right: 22px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 13px;
+    padding: 8px;
+    cursor: pointer;
+    visibility: hidden;
+    transition: visibility 0.5s ease-in-out;
+}
+
+#basketInfo img {
+    width: 33px;
+    height: 33px;
+}
+
+#basketInfo div {
+    color: #fff;
+    background: #2a5b2c;
+    font-weight: bold;
+    margin-bottom: -11px;
+    border-radius: 50%;
+    font-size: 15px;
+    padding: 5px;
 }
 
 @media (max-width: 768px) {
@@ -413,7 +441,6 @@ article a {
     menu li img {
         vertical-align: bottom;
         padding: 8px;
-
     }
 
     menu li.close {

@@ -2,18 +2,16 @@
     "company": {
         "name": "Özüm'le Gıda",
         "address": [
-            "Mimar Sinan Mahallesi Üsküdar Caddesi No:48",
+            "Mimar Sinan Mahallesi",
+            "Üsküdar Caddesi No:48",
             "YEDPA Ticaret Merkezi 1 F",
             "Ataşehir / İstanbul"
         ],
-        "legalName": "ONUR YİĞİT-ÖZÜM GIDA TİCARET VE SANAYİ",
-        "iban": "TR 1800 0010 0000 0000 0000 0000",
-        "bankName": "Yapı Kredi Bankası",
-        "taxNumber": "1234567890",
-        "taxOffice": "İstanbul",
         "phone": "+90 540 906 35 18",
         "email": "onur.yigit@ozumgida.com",
         "instagram": "https://www.instagram.com/ozumlelezzetler/",
+        "facebook": "#",
+        "youtube": "#",
         "slogan": "Erzincan’ın geleneksel eşsiz tatlarını modern dokunuşlarla sofralarınıza getiriyoruz.",
         "description": "Özüm’le, geleneksel Erzincan lezzetlerini özenle seçerek modern sofralara ulaştırmak amacıyla kurulmuş bir aile markasıdır.",
         "about": [

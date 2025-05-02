@@ -185,11 +185,10 @@ article p {
 }
 
 #basket ul li img {
-    width: 99px;
-    height: 99px;
-    margin: 5px;
-    margin-left: 55px;
-    margin-top: 21px;
+    width: 88px;
+    height: 88px;
+    margin: 0;
+    margin-top: 13px;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
@@ -199,20 +198,22 @@ article p {
 .bskbtn {
     display: inline-block;
     background-color: #ffa91e;
-    padding-inline: 6px;
+    padding-inline: 7px;
     padding-block: 0px;
-    margin-inline: 15px;
-    font-size: 19px;
+    margin-inline: 13px;
+    font-size: 17px;
     border-radius: 8px;
+    line-height: 1.8;
 }
 
 #basket ul li button.btnDelete {
     position: relative;
     top: -55px;
-    left: -30px;
+    right: -13px;
     font-size: 15px;
     padding-left: 8px;
     padding-right: 8px;
+    margin: 0;
 }
 
 .btnAddToBasket {

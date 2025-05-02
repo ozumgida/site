@@ -3,7 +3,7 @@
         {
             "id": "p200",
             "name": "Erzincan Tulum Peyniri 200 gr",
-            "urlName": "erzincan-tulum-peyniri-200gr",
+            "url": "erzincan-tulum-peyniri-200gr",
             "price": 80,
             "shortDesc": "Erzincan tulum peyniri, çiğ koyun sütü ve doğal mayayla yüksek yaylalarda üretilir.",
             "metaDesc": "Erzincan tulum peyniri, Türkiye'nin eşsiz lezzet mirası ve geleneksel peynir kültürünün en değerli örneklerinden biridir.",
@@ -23,7 +23,7 @@
         {
             "id": "p500",
             "name": "Erzincan Tulum Peyniri 500 gr",
-            "urlName": "erzincan-tulum-peyniri-500gr",
+            "url": "erzincan-tulum-peyniri-500gr",
             "price": 190,
             "shortDesc": "Erzincan tulum peyniri, çiğ koyun sütü ve doğal mayayla yüksek yaylalarda üretilir.",
             "metaDesc": "Erzincan tulum peyniri, Doğu Anadolu'nun bereketli yaylalarından sofralarınıza gelen eşsiz bir lezzet deneyimidir.",
@@ -43,7 +43,7 @@
         {
             "id": "p1000",
             "name": "Erzincan Tulum Peyniri 1 kg",
-            "urlName": "erzincan-tulum-peyniri-1000gr",
+            "url": "erzincan-tulum-peyniri-1000gr",
             "price": 380,
             "shortDesc": "Erzincan tulum peyniri, çiğ koyun sütü ve doğal maya ile yüksek yaylalarda üretilir.",
             "metaDesc": "Erzincan tulum peyniri, Doğu Anadolu'nun yaylalarından gelen eşsiz bir lezzettir.",
@@ -63,7 +63,7 @@
         {
             "id": "yt1000",
             "name": "Yemeklik Tuzlu Tereyağı 1 kg",
-            "urlName": "tuzlu-tereyagi-1000gr",
+            "url": "tuzlu-tereyagi-1000gr",
             "price": 370,
             "shortDesc": "Köy tereyağı, köyün taptaze sütünden, nesiller boyunca süregelen geleneksel yayık yöntemiyle özenle üretilir.",
             "metaDesc": "Geleneksel yayık yöntemiyle üretilen tuzlu tereyağı, mutfağınızın vazgeçilmez doğal lezzet kaynağıdır.",
@@ -83,7 +83,7 @@
         {
             "id": "y500",
             "name": "Tuzsuz Tereyağı 500 gr",
-            "urlName": "tuzsuz-tereyagi-500gr",
+            "url": "tuzsuz-tereyagi-500gr",
             "price": 185,
             "shortDesc": "Köy tereyağı, köyün taptaze sütünden, nesiller boyunca süregelen geleneksel yayık yöntemiyle özenle üretilir.",
             "metaDesc": "Tuzsuz tereyağımız, tatlılardan hamur işlerine tüm tariflerde kullanılabilecek, katkısız ve doğal bir lezzet sunar.",
@@ -103,7 +103,7 @@
         {
             "id": "y1000",
             "name": "Tuzsuz Tereyağı 1 kg",
-            "urlName": "tuzsuz-tereyagi-1000gr",
+            "url": "tuzsuz-tereyagi-1000gr",
             "price": 370,
             "shortDesc": "Köy tereyağı, taptaze sütle geleneksel yayık yöntemi kullanılarak özenle üretilir ve katkısız, doğal bir lezzet sunar.",
             "metaDesc": "1 kilo tuzsuz köy tereyağı, doğal ve katkısız yapısıyla tatlıdan tuzluya her tarifte eşsiz bir lezzet sunar.",

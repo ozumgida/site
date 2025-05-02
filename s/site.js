@@ -6,19 +6,13 @@ var BASKET = [];
 var IS_MOBILE = /Mobi|Android/i.test(navigator.userAgent);
 var IS_HOME = window.location.pathname == "/" || window.location.pathname.includes("/index.html");
 
-function doProduct(product, isLinked = true) {
-    let $p = document.createElement("li");
-    $p.dataset.id = product.id;
-    $p.dataset.price = product.price;
-    $p.dataset.url = product.urlName;
-
+function doProductInner($p, product, isLinked) {
     let $img = img("", product.name);
-    $img.src = "/organik-urunler/" + product.urlName + ".jpg";
-    $img.dataset.url = product.urlName;
+    $img.src = "/organik-urunler/" + product.url + ".jpg";
     $p.append($img);
 
     let $name = h2(product.name);
-    $name.dataset.url = product.urlName;
+    $img.dataset.url = $name.dataset.url = product.url;
     $p.append($name);
 
     let $price = document.createElement("strong");
@@ -34,26 +28,17 @@ function doProduct(product, isLinked = true) {
         updateHtmlDesc(product.metaDesc);
         rmv("main h3");
     }
+}
+
+function doProduct(product, isLinked = true) {
+    let $p = document.createElement("li");
+    $p.dataset.id = product.id;
+
+    doProductInner($p, product, isLinked);
 
     let $btn = btn("Sepete Ekle");
     $btn.className = "btnAddToBasket";
-    $btn.addEventListener("click", function () {
-        this.style.display = "none";
-        let x = p("Sepete Eklendi");
-        insertAfter(this, x);
-
-        let basketQuantity = 1;
-
-        let existing = document.querySelector(`#basket li[data-id="${product.id}"]`);
-        if (existing) {
-            basketQuantity = parseInt(existing.querySelector("em").textContent.split(" ")[0]) + 1;
-        }
-
-        //basketAdder(x, product.id, product.price, basketQuantity);
-
-        addToBasket(this.parentElement.cloneNode(true), basketQuantity);
-        this.remove();
-    });
+    $btn.addEventListener("click", fnAddToBasket);
     $p.append($btn, br(), br());
 
     return $p;
@@ -158,9 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
         else { part.style.marginTop = "-55px"; }
         $body.append(part);
     }
-    else {
-        $m.append(h3(COMPANY.slogan));
-    }
+    else { $m.append(h3(COMPANY.slogan)); }
 
     $body.append($m);
     doBasket($body, doFooter($body));
@@ -174,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (window.location.href.includes("/organik-urunler/")) {
         let pun = window.location.href.split("/").pop().split(".")[0];
-        let product = PRODUCTS.find(p => p.urlName === pun);
+        let product = PRODUCTS.find(p => p.url === pun);
         if (product) {
             document.title = product.name + " | " + COMPANY.name;
             let a = article();
@@ -191,109 +174,137 @@ document.addEventListener("DOMContentLoaded", function () {
         let prms = new URLSearchParams(window.location.search);
         for (let [key, value] of prms.entries()) {
             let product = PRODUCTS.find(p => p.id === key);
-            if (product) { addToBasket(doProduct(product), parseInt(value)); }
+            if (product) { addToBasket(key, parseInt(value)); }
         }
     }, 987);
 
     setTimeout(function () {
         let preloadImages = ["/img/kahvaltilik-1.jpg", "/img/kahvaltilik-2.jpg", "/img/hakkimizda.jpg", "/img/iletisim.jpg", "/img/lezzetimizin-hikayesi.jpg"];
-        PRODUCTS.forEach(product => { preloadImages.push(`/organik-urunler/${product.urlName}.jpg`); });
+        PRODUCTS.forEach(product => { preloadImages.push(`/organik-urunler/${product.url}.jpg`); });
         preloadImages.forEach(src => { let img = new Image(); img.src = src; });
     }, 3456);
 });
 
-//sync count on every product place
-//load basket adder if item is in basket
+function changeBtnAddToBasket(parent, display) {
+    let btn = parent.querySelector(".btnAddToBasket");
+    if (btn) {
+        btn.style.display = display;
+        let removing = [];
+        let sib = btn.nextSibling;
+        while (sib) {
+            removing.push(sib);
+            sib = sib.nextSibling;
+        }
+        removing.forEach(el => el.remove());
+    }
+    return btn;
+}
 
-function basketAdder(prevElem, prdId, price, quantity) {
-    let priceKey = `#basket li[data-id="${prdId}"] strong`;
-    let unitPrice = parseFloat(price);
-    let $quantity = em(quantity + " Adet");
+function basketAdder(prevElem, prdId) {
+    let existing = BASKET.find(p => p.id == prdId);
 
-    let $mb = btn("⚊");
-    $mb.style.visibility = "hidden";
+    let $q = em(existing.quantity + " Adet");
+
+    let mbs = existing.quantity > 1 ? "⚊" : "x";
+    let $mb = btn(mbs);
+    $mb.addEventListener("click", function () {
+        if (existing.quantity > 1) { decreaseBasket(prdId, existing.quantity); }
+        else {
+            changeBtnAddToBasket($mb.parentElement, "inline-block");
+            removeFromBasket(prdId);
+        }
+    });
+
     let $pb = btn("+");
     $mb.className = $pb.className = "bskbtn";
-
-    $mb.addEventListener("click", function () {
-        let quantity = parseInt($quantity.textContent);
-        if (quantity > 1) {
-            $quantity.textContent = `${--quantity} Adet`;
-            let $price = document.querySelector(priceKey);
-            $price.textContent = formatPrice(unitPrice * quantity);
-            updateTotal();
-        }
-
-        if (quantity <= 1) { this.style.visibility = "hidden"; }
-    });
-
-    $pb.addEventListener("click", function () {
-        let quantity = parseInt($quantity.textContent);
-        $quantity.textContent = `${++quantity} Adet`;
-        let $price = document.querySelector(priceKey);
-        $price.textContent = formatPrice(unitPrice * quantity);
-        updateTotal();
-        $mb.style.visibility = "visible";
-    });
+    $pb.addEventListener("click", function () { addToBasket(prdId); });
 
     insertAfter(prevElem, $pb);
-    insertAfter(prevElem, $quantity);
+    insertAfter(prevElem, $q);
     insertAfter(prevElem, $mb);
 }
 
-function addToBasket(product, quantity = 1) {
-    let $basket = document.getElementById("basket");
-    showBasket($basket, document.getElementById("btnShowBasket"));
+function fnAddToBasket() {
+    this.style.display = "none";
+    let x = p("Sepete Eklendi");
+    x.style.marginBottom = "5px";
+    insertAfter(this, x);
 
-    // let index = BASKET.findIndex(item => item.id === product.dataset.id);
-    // if (index !== -1) {
-    //     BASKET[index] = { ...BASKET[index], quantity: quantity + 1 };
-    // } else {
-    //     BASKET.push({
-    //         id: product.dataset.id,
-    //         price: parseFloat(product.dataset.price),
-    //         quantity: quantity
-    //     });
-    // }
+    let prdId = this.parentElement.dataset.id;
+    addToBasket(prdId);
+    basketAdder(x, prdId);
+}
 
+function addToBasket(prdId, quantity) {
+    let db = PRODUCTS.find(p => p.id == prdId);
+    if (quantity == undefined) { quantity = 1; }
 
-    // console.log(BASKET);
+    let existing = BASKET.find(p => p.id == db.id);
+    if (existing) { BASKET = BASKET.map(p => p.id === existing.id ? { ...p, quantity: existing.quantity + 1 } : p); }
+    else { BASKET.push({ id: db.id, name: db.name, url: db.url, price: db.price, quantity: quantity }); }
 
-    let existing = Array.from($basket.querySelectorAll("li")).find(item => item.dataset.id === product.dataset.id);
-    if (existing) {
-        let $quantity = existing.querySelector("em");
-        let $price = existing.querySelector("strong");
-        let unitPrice = parseFloat(existing.dataset.price);
-        let quantity = parseInt($quantity.textContent);
-        $quantity.textContent = `${++quantity} Adet`;
-        $price.textContent = formatPrice(unitPrice * quantity);
-        updateTotal();
-        return;
+    refreshBasket();
+}
+
+function decreaseBasket(prdId, quantity) {
+    BASKET = BASKET.map(p => p.id === prdId ? { ...p, quantity: quantity - 1 } : p);
+    refreshBasket();
+}
+
+function removeFromBasket(prdId) {
+    BASKET = BASKET.filter(p => p.id !== prdId);
+    refreshBasket();
+
+    let productInList = document.querySelector("#products li[data-id='" + prdId + "']");
+    if (productInList) { changeBtnAddToBasket(productInList, "inline-block"); }
+
+    let productBig = document.querySelector(".prd > li[data-id='" + prdId + "']");
+    if (productBig) { changeBtnAddToBasket(productBig, "inline-block"); }
+}
+
+function refreshBasket() {
+    let total = 0;
+    let qp = [];
+    BASKET.forEach(function (p) {
+        qp.push(`${p.id}=${p.quantity}`);
+        total += p.quantity * p.price;
+    });
+    history.replaceState(null, "", `?${qp.join("&")}`);
+
+    document.getElementById("pTotal").textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
+    document.getElementById("total").textContent = "Genel Toplam : " + formatPrice(total + 150);
+
+    let $bi = document.getElementById("basketInfo");
+    if (BASKET.length > 0) {
+        $bi.querySelector("div").textContent = BASKET.length;
+        $bi.style.visibility = "visible";
+    } else {
+        $bi.querySelector("div").textContent = "";
+        $bi.style.visibility = "hidden";
     }
 
-    let removing = [];
-    let sib = product.querySelector("strong").nextSibling;
-    while (sib) {
-        removing.push(sib);
-        sib = sib.nextSibling;
-    }
-    removing.forEach(el => el.remove());
+    let $ul = document.querySelector("#basket > ul");
+    $ul.innerHTML = "";
+    BASKET.forEach(function (p) {
+        let $li = li();
+        let $db = btn("x");
+        $db.classList.add("btnDelete");
+        $db.addEventListener("click", function () { removeFromBasket(p.id); });
+        $li.append($db);
 
-    let $db = btn("X");
-    $db.classList.add("btnDelete");
-    $db.addEventListener("click", function () { rmv2(product); updateTotal(); });
+        doProductInner($li, p, true);
+        basketAdder($li.lastElementChild, p.id);
 
-    insertAfter(product.querySelector("img"), $db);
+        $ul.append($li);
 
-    let $h2 = product.querySelector("h2");
-    $h2.removeEventListener("click", fpc);
-    let $price = product.querySelector("strong");
-    $price.textContent = formatPrice(product.dataset.price);
+        let productInList = document.querySelector("#products li[data-id='" + p.id + "']");
+        if (productInList) { basketAdder(changeBtnAddToBasket(productInList, "none"), p.id); }
 
-    basketAdder($h2, product.dataset.id, product.dataset.price, quantity);
+        let productBig = document.querySelector(".prd > li[data-id='" + p.id + "']");
+        if (productBig) { basketAdder(changeBtnAddToBasket(productBig, "none"), p.id); }
+    });
 
-    $basket.querySelector("ul").appendChild(product);
-    updateTotal();
+    showBasket();
 }
 
 function doBasket($body, $f) {
@@ -302,7 +313,7 @@ function doBasket($body, $f) {
     bi.append(div(), img("/img/basket.png", "Sepet"));
     bi.addEventListener("click", function () {
         window.location.href = "#basket";
-        showBasket(document.getElementById("basket"), document.getElementById("btnShowBasket"));
+        showBasket();
     });
     $body.append(bi);
 
@@ -313,11 +324,10 @@ function doBasket($body, $f) {
     let $bs = btn("Sepeti Göster");
     $bs.id = "btnShowBasket";
     $bs.addEventListener("click", function () {
-        if ($bs.dataset.active === "true") { hideBasket($b, $bs); }
-        else { showBasket($b, $bs); }
+        if ($bs.dataset.active === "true") { hideBasket(); }
+        else { showBasket(); }
     });
     $b.append($bs);
-    hideBasket($b, $bs);
 
     $b.append(document.createElement("ul"));
     let $pTotal = p("Ürün Tutarı: 0 TL");
@@ -336,8 +346,7 @@ function doBasket($body, $f) {
     $bw.addEventListener("click", function () {
         let phone = COMPANY.phone;
         let message = "Merhaba,\n\n";
-        let ps = $b.querySelectorAll("li");
-        ps.forEach(function (p) { message += `${p.querySelector("em").textContent} ${p.querySelector("h2").textContent}\n`; });
+        BASKET.forEach(function (p) { message += `${p.quantity} ${p.name}\n`; });
         message += "\nSatın almak istiyorum.";
 
         let encoded = encodeURIComponent(message);
@@ -347,55 +356,28 @@ function doBasket($body, $f) {
     $b.appendChild($bw);
 
     $body.insertBefore($b, $f);
+    hideBasket();
 }
 
-function showBasket(p, b) {
+function showBasket() {
+    let p = document.getElementById("basket");
+    let b = document.getElementById("btnShowBasket");
     b.dataset.active = "true";
     b.innerHTML = "Sepeti Gizle";
     p.style.height = "fit-content";
 }
 
-function hideBasket(p, b) {
+function hideBasket() {
+    let p = document.getElementById("basket");
+    let b = document.getElementById("btnShowBasket");
     b.dataset.active = "false";
     b.innerHTML = "Sepeti Göster";
     p.style.height = IS_MOBILE ? "230px" : "160px";
 }
 
-function updateTotal() {
-    let $pTotal = document.getElementById("pTotal");
-    let $total = document.getElementById("total");
-    let $basket = document.getElementById("basket");
-    let $products = $basket.querySelectorAll("li");
-
-    let total = 0;
-    let count = 0;
-    let qp = [];
-    $products.forEach(function ($p) {
-        let quantity = $p.querySelector("em").textContent.split(" ")[0];
-        qp.push(`${$p.dataset.id}=${quantity}`);
-        total += parseFloat($p.querySelector("strong").textContent.replace(/\D/g, ""));
-        count++;
-    });
-
-    $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
-    total += 150;
-    $total.textContent = "Genel Toplam : " + formatPrice(total);
-
-    history.replaceState(null, "", `?${qp.join("&")}`);
-
-    let $basketInfo = document.getElementById("basketInfo");
-    if (count > 0) {
-        $basketInfo.querySelector("div").textContent = count;
-        $basketInfo.style.visibility = "visible";
-    } else {
-        $basketInfo.querySelector("div").textContent = "";
-        $basketInfo.style.visibility = "hidden";
-    }
-}
-
 function formatPrice(price) { return price.toLocaleString("tr-TR") + " TL"; }
 
-let fpc = function () { window.location.href = "/organik-urunler/" + this.dataset.url + ".html" + window.location.search; };
+function fpc() { window.location.href = "/organik-urunler/" + this.dataset.url + ".html" + window.location.search; };
 
 
 function menuItem(t, u) {

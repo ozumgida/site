@@ -3,7 +3,7 @@ var COMPANY;
 var SITE;
 var BASKET = [];
 
-var IS_MOBILE = /Mobi|Android/i.test(navigator.userAgent);
+var IS_MOBILE = /Mobi|Android/i.test(navigator.userAgent) && window.innerWidth < 768;
 var IS_HOME = window.location.pathname == "/" || window.location.pathname.includes("/index.html");
 
 function doProductInner($p, product, isLinked) {
@@ -177,25 +177,13 @@ document.addEventListener("DOMContentLoaded", function () {
             if (product) { addToBasket(key, parseInt(value)); }
         }
     }, 987);
-
-    setTimeout(function () {
-        let preloadImages = ["/img/kahvaltilik-1.jpg", "/img/kahvaltilik-2.jpg", "/img/hakkimizda.jpg", "/img/iletisim.jpg", "/img/lezzetimizin-hikayesi.jpg"];
-        PRODUCTS.forEach(product => { preloadImages.push(`/organik-urunler/${product.url}.jpg`); });
-        preloadImages.forEach(src => { let img = new Image(); img.src = src; });
-    }, 3456);
 });
 
 function changeBtnAddToBasket(parent, display) {
     let btn = parent.querySelector(".btnAddToBasket");
     if (btn) {
         btn.style.display = display;
-        let removing = [];
-        let sib = btn.nextSibling;
-        while (sib) {
-            removing.push(sib);
-            sib = sib.nextSibling;
-        }
-        removing.forEach(el => el.remove());
+        rmAfter(btn);
     }
     return btn;
 }
@@ -205,8 +193,9 @@ function basketAdder(prevElem, prdId) {
 
     let $q = em(existing.quantity + " Adet");
 
-    let mbs = existing.quantity > 1 ? "⚊" : "x";
-    let $mb = btn(mbs);
+    let mbs = existing.quantity > 1 ? "minus" : "delete";
+    let mbs2 = existing.quantity > 1 ? "çıkart" : "sil";
+    let $mb = img("/img/" + mbs + ".png", mbs2);
     $mb.addEventListener("click", function () {
         if (existing.quantity > 1) { decreaseBasket(prdId, existing.quantity); }
         else {
@@ -215,7 +204,7 @@ function basketAdder(prevElem, prdId) {
         }
     });
 
-    let $pb = btn("+");
+    let $pb = img("/img/plus.png", "ekle");
     $mb.className = $pb.className = "bskbtn";
     $pb.addEventListener("click", function () { addToBasket(prdId); });
 
@@ -271,38 +260,67 @@ function refreshBasket() {
     });
     history.replaceState(null, "", `?${qp.join("&")}`);
 
-    document.getElementById("pTotal").textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
-    document.getElementById("total").textContent = "Genel Toplam : " + formatPrice(total + 150);
-
     let $bi = document.getElementById("basketInfo");
     if (BASKET.length > 0) {
-        $bi.querySelector("div").textContent = BASKET.length;
+        $bi.querySelector("div").textContent = BASKET.reduce((sum, item) => sum + item.quantity, 0);
         $bi.style.visibility = "visible";
     } else {
         $bi.querySelector("div").textContent = "";
         $bi.style.visibility = "hidden";
     }
 
-    let $ul = document.querySelector("#basket > ul");
+    let $ul = document.querySelector("#basket ul");
     $ul.innerHTML = "";
-    BASKET.forEach(function (p) {
-        let $li = li();
-        let $db = btn("x");
-        $db.classList.add("btnDelete");
-        $db.addEventListener("click", function () { removeFromBasket(p.id); });
-        $li.append($db);
+    rmAfter($ul);
 
-        doProductInner($li, p, true);
-        basketAdder($li.lastElementChild, p.id);
+    if (BASKET.length > 0) {
+        let $b = document.querySelector("#basket");
+        let $pTotal = p("");
+        $pTotal.id = "pTotal";
+        $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
+        $b.appendChild($pTotal);
 
-        $ul.append($li);
+        let $cargo = p("Kargo Ücreti: 150 TL");
+        $b.appendChild($cargo);
 
-        let productInList = document.querySelector("#products li[data-id='" + p.id + "']");
-        if (productInList) { basketAdder(changeBtnAddToBasket(productInList, "none"), p.id); }
+        let $total = p("");
+        $total.id = "total";
+        $total.textContent = "Genel Toplam : " + formatPrice(total + 150);
+        $b.appendChild($total);
 
-        let productBig = document.querySelector(".prd > li[data-id='" + p.id + "']");
-        if (productBig) { basketAdder(changeBtnAddToBasket(productBig, "none"), p.id); }
-    });
+        let $bw = btn("Whatsapp'dan Siparişini İlet");
+        $bw.id = "btnOrderFromWhatsapp";
+        $bw.addEventListener("click", function () {
+            let phone = COMPANY.phone;
+            let message = "Merhaba,\n\n";
+            BASKET.forEach(function (p) { message += `${p.quantity} ${p.name}\n`; });
+            message += "\nSatın almak istiyorum.";
+
+            let encoded = encodeURIComponent(message);
+            if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
+            else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }
+        });
+        $b.appendChild($bw);
+
+        BASKET.forEach(function (p) {
+            let $li = li();
+            let $db = img("/img/delete.png", "sil");
+            $db.className = "btnDelete";
+            $db.addEventListener("click", function () { removeFromBasket(p.id); });
+            $li.append($db);
+
+            doProductInner($li, p, true);
+            basketAdder($li.lastElementChild, p.id);
+
+            $ul.append($li);
+
+            let productInList = document.querySelector("#products li[data-id='" + p.id + "']");
+            if (productInList) { basketAdder(changeBtnAddToBasket(productInList, "none"), p.id); }
+
+            let productBig = document.querySelector(".prd > li[data-id='" + p.id + "']");
+            if (productBig) { basketAdder(changeBtnAddToBasket(productBig, "none"), p.id); }
+        });
+    }
 
     showBasket();
 }
@@ -328,32 +346,7 @@ function doBasket($body, $f) {
         else { showBasket(); }
     });
     $b.append($bs);
-
     $b.append(document.createElement("ul"));
-    let $pTotal = p("Ürün Tutarı: 0 TL");
-    $pTotal.id = "pTotal";
-    $b.appendChild($pTotal);
-
-    let $cargo = p("Kargo Ücreti: 150 TL");
-    $b.appendChild($cargo);
-
-    let $total = p("Genel Toplam: 150 TL");
-    $total.id = "total";
-    $b.appendChild($total);
-
-    let $bw = btn("Whatsapp'dan Siparişini İlet");
-    $bw.id = "btnOrderFromWhatsapp";
-    $bw.addEventListener("click", function () {
-        let phone = COMPANY.phone;
-        let message = "Merhaba,\n\n";
-        BASKET.forEach(function (p) { message += `${p.quantity} ${p.name}\n`; });
-        message += "\nSatın almak istiyorum.";
-
-        let encoded = encodeURIComponent(message);
-        if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
-        else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }
-    });
-    $b.appendChild($bw);
 
     $body.insertBefore($b, $f);
     hideBasket();
@@ -449,11 +442,20 @@ function doFooter($body) {
     let $f = document.createElement("footer");
     $f.append(imgWithBtn("/img/kahvaltilik-2.jpg", SITE.footSloganBtn, SITE.footSloganLnk, [SITE.footImgSloganStart, SITE.footImgSloganEnd]));
 
+    let $w = lnkimg("tel:" + COMPANY.phone, "/img/whatsapp.png", "whatsapp");
+    $w.addEventListener("click", function () {
+        let phone = COMPANY.phone;
+        let message = "Merhaba";
+        if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${message}`, "_blank"); }
+        else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${message}`, "_blank"); }
+    });
+
     let $social = div();
     $social.className = "social";
     $social.append(lnkimg(COMPANY.instagram, "/img/instagram.png", "instagram"),
         lnkimg(COMPANY.facebook, "/img/facebook.png", "facebook"),
-        lnkimg(COMPANY.youtube, "/img/linkedin.png", "linkedin"));
+        lnkimg(COMPANY.youtube, "/img/linkedin.png", "linkedin"),
+        $w);
 
     $f.append(
         br(), br(), $social, br(), br(),
@@ -584,7 +586,23 @@ function btn(t) {
     return x;
 }
 
+function btni(s, t) {
+    let x = document.createElement("button");
+    x.append(img(s, t));
+    return x;
+}
+
 function rmv(i) { rmv2(document.querySelector(i)); }
 function rmv2(e) { if (e) { e.remove(); } }
+function rmAfter(e) {
+    if (!e) { return; }
+    let removing = [];
+    let sib = e.nextSibling;
+    while (sib) {
+        removing.push(sib);
+        sib = sib.nextSibling;
+    }
+    removing.forEach(el => el.remove());
+}
 
 function insertAfter(r, n) { r.insertAdjacentElement("afterend", n); }

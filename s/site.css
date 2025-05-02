@@ -81,12 +81,11 @@ footer {
 
 footer a {
     display: block;
-    margin: 11px;
     color: #fff;
     text-decoration: underline;
     text-underline-offset: 3px;
-    width: fit-content;
     margin: auto;
+    font-size: 13px;
 }
 
 footer p {
@@ -187,33 +186,35 @@ article p {
 #basket ul li img {
     width: 88px;
     height: 88px;
-    margin: 0;
-    margin-top: 13px;
+    margin-top: 15px;
+    margin-right: 35px;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
 #basket ul li button,
-.bskbtn {
+.bskbtn,
+.btnDelete {
     display: inline-block;
     background-color: #ffa91e;
-    padding-inline: 7px;
-    padding-block: 0px;
-    margin-inline: 13px;
-    font-size: 17px;
-    border-radius: 8px;
-    line-height: 1.8;
+    padding: 0 !important;
+    margin: 0 !important;
+    margin-inline: 13px !important;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    width: 24px !important;
+    height: 24px !important;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#basket ul li button.btnDelete {
+#basket ul li img.btnDelete {
     position: relative;
-    top: -55px;
-    right: -13px;
-    font-size: 15px;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin: 0;
+    top: -42px;
+    right: -21px;
 }
 
 .btnAddToBasket {
@@ -310,6 +311,7 @@ h3 {
     font-weight: bold;
     display: block;
     margin: 5px;
+    padding-bottom: 2px;
 }
 
 #products img {
@@ -324,6 +326,10 @@ h3 {
     padding-top: 8px;
 }
 
+.prd li {
+    padding-bottom: 13px;
+}
+
 .prd img {
     width: 55%;
     object-fit: cover;
@@ -335,7 +341,7 @@ h3 {
     height: 444px;
     overflow: hidden;
     width: 100%;
-    border-top: 8px solid #fff;
+    border-top: 2px solid #4CAF50;
     border-bottom: 19px solid #EDE6DB;
 }
 
@@ -357,7 +363,7 @@ footer .bigImg img {
     color: #584629;
     margin: auto;
     width: 55%;
-    height: 133px;
+    height: 123px;
     text-align: center;
     border-radius: 13px;
     padding: 21px;
@@ -365,10 +371,10 @@ footer .bigImg img {
 
 .bigImg button {
     position: relative;
-    top: 10px;
+    top: 21px;
     margin: 0 auto;
     background-color: #4CAF50;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .bigImg em {
@@ -432,9 +438,31 @@ article a {
     padding: 3px;
 }
 
+
+li button img {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    margin: 0 !important;
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 @media (max-width: 768px) {
     .bigImg div {
         width: 89%;
+    }
+
+    .bigImg button {
+        top: 8px;
+    }
+
+    .bigImg em {
+        font-size: 15px;
+        margin-bottom: 3px;
     }
 
     #products {

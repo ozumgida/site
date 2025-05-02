@@ -46,9 +46,9 @@ function doProduct(product, isLinked = true) {
             basketQuantity = parseInt(existing.querySelector("em").textContent.split(" ")[0]) + 1;
         }
 
-        basketAdder(x, product.id, product.price, basketQuantity);
+        //basketAdder(x, product.id, product.price, basketQuantity);
 
-        addToBasket(this.parentElement.cloneNode(true));
+        addToBasket(this.parentElement.cloneNode(true), basketQuantity);
         this.remove();
     });
     $p.append($btn, br(), br());
@@ -91,12 +91,41 @@ function doIletisim($main) {
 function doSiteHaritasi($main) {
     document.title = "Site Haritası | " + COMPANY.name;
     let a = article();
-    a.append(h2("Site Haritası"), br(),
+    let i = img("/img/site-haritasi.jpg", "Site Haritası");
+    i.style.objectPosition = "bottom";
+    a.append(h2("Site Haritası"), i, br(),
         lnk("/index.html", "Anasayfa"),
         lnk("/urunlerimiz.html", "Ürünlerimiz"),
-        lnk("/lezzetimizin-hikayesi.html", "Lezzetimizin Hikayesi"),
         lnk("/hakkimizda.html", "Hakkımızda"),
+        lnk("/lezzetimizin-hikayesi.html", "Lezzetimizin Hikayesi"),        
+        lnk("/satis-sozlesmesi.html", "Mesafeli Satış Sözleşmesi"),
+        lnk("/kvkk.html", "KVKK Aydınlatma Metni"),
         lnk("/iletisim.html", "İletişim"), br());
+    $main.append(a);
+    return a;
+}
+
+function doKVKK($main) {
+    document.title = "Kişisel verilerinizin korunması hakkında | " + COMPANY.name;
+    let parts = getData("kvkk").parts;
+    let a = article();
+    let i = img("/img/kvkk.jpg", "Kişisel verilerinizi koruyoruz");
+    i.style.objectPosition = "center";
+    a.append(h2("KVKK Aydınlatma Metni"), i);
+    parts.forEach(item => { a.append(h2(item.title), p(item.content, true)); });
+    $main.append(a);
+    return a;
+}
+
+function doSozlesme($main) {
+    document.title = "Mesafeli satış sözleşmesi hakkında | " + COMPANY.name;
+    let parts = getData("sozlesme").parts;
+    let a = article();
+    let i = img("/img/sozlesme.jpg", "Mesafeli Satış Sözleşmesi");
+    if (IS_MOBILE) { i.style.objectPosition = "left"; }
+    else { i.style.objectPosition = "top"; }
+    a.append(h2("Mesafeli Satış Sözleşmesi"), i);
+    parts.forEach(item => { a.append(h2(item.title), p(item.content, true)); });
     $main.append(a);
     return a;
 }
@@ -133,6 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.location.href.includes("/hakkimizda.html")) { doAbout($main); }
     if (window.location.href.includes("/iletisim.html")) { doIletisim($main); }
     if (window.location.href.includes("/site-haritasi.html")) { doSiteHaritasi($main); }
+    if (window.location.href.includes("/kvkk.html")) { doKVKK($main); }
+    if (window.location.href.includes("/satis-sozlesmesi.html")) { doSozlesme($main); }
     if (window.location.href.includes("lezzetimizin-hikayesi.html")) { doLezzetimizinHikayesi($main); }
 
     if (window.location.href.includes("/organik-urunler/")) {
@@ -414,26 +445,24 @@ function doHeader($body) {
 }
 
 function doFooter($body) {
-    let $footer = document.createElement("footer");
-    $footer.append(imgWithBtn("/img/kahvaltilik-2.jpg", "Ürünlerimizi Görün"));
+    let $f = document.createElement("footer");
+    $f.append(imgWithBtn("/img/kahvaltilik-2.jpg", "Ürünlerimizi Görün"));
 
     let $social = div();
     $social.className = "social";
     $social.append(lnkimg(COMPANY.instagram, "/img/instagram.png", "instagram"),
         lnkimg(COMPANY.facebook, "/img/facebook.png", "facebook"),
-        lnkimg(COMPANY.youtube, "/img/youtube.png", "youtube"));
+        lnkimg(COMPANY.youtube, "/img/linkedin.png", "linkedin"));
 
-    $footer.append(
-        address(COMPANY.address),
-        lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone), lnk("mailto:" + COMPANY.email, COMPANY.email),
-        br(), br(), $social, br(),
-        getLogo(), p(COMPANY.name + " © " + new Date().getFullYear()),
-        lnk("#", "Uzaktan Satış Sözleşmesi"),
-        lnk("#", "Kişisel Verilerinizin Korunması Sözleşmesi"), br(),
-        lnk("/site-haritasi.html", "Site Haritası"), br(), br());
+    $f.append(
+        br(), br(), $social, br(), br(),
+        lnk("mailto:" + COMPANY.email, COMPANY.email), p(COMPANY.name + " © " + new Date().getFullYear()), br(),
+        lnk("/satis-sozlesmesi.html", "Uzaktan Satış Sözleşmesi"),
+        lnk("/kvkk.html", "KVKK Aydınlatma Metni"),
+        lnk("/site-haritasi.html", "Site Haritası"), getLogo());
 
-    $body.append($footer);
-    return $footer;
+    $body.append($f);
+    return $f;
 }
 
 function getLogo() {

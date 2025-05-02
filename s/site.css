@@ -149,6 +149,7 @@ article img {
     width: 100%;
     height: 333px;
     object-fit: cover;
+    object-position: bottom;
     margin-top: 13px;
     margin-bottom: 13px;
     border-radius: 13px;
@@ -191,7 +192,7 @@ article p {
     cursor: pointer;
 }
 
-#basket ul li button {
+#basket ul li button, .bskbtn {
     display: inline-block;
     background-color: #ffa91e;
     padding-inline: 6px;
@@ -369,8 +370,8 @@ article a {
 
 #basketInfo {
     position: fixed;
-    top: 66px;
-    right: 22px;
+    top: 55px;
+    right: 8px;
     background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 13px;
@@ -381,18 +382,18 @@ article a {
 }
 
 #basketInfo img {
-    width: 33px;
-    height: 33px;
+    width: 24px;
+    height: 24px;
 }
 
 #basketInfo div {
     color: #fff;
     background: #2a5b2c;
     font-weight: bold;
-    margin-bottom: -11px;
+    margin-bottom: -5px;
     border-radius: 50%;
-    font-size: 15px;
-    padding: 5px;
+    font-size: 13px;
+    padding: 3px;
 }
 
 @media (max-width: 768px) {

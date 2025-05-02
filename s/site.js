@@ -35,12 +35,23 @@ function doProduct(product, isLinked = true) {
     let $btn = btn("Sepete Ekle");
     $btn.className = "btnAddToBasket";
     $btn.addEventListener("click", function () {
-        this.style.visibility = "hidden";
-        insertAfter(this, p("Sepete Eklendi"));
+        this.style.display = "none";
+        let x = p("Sepete Eklendi");
+        insertAfter(this, x);
+
+        let basketQuantity = 1;
+
+        let existing = document.querySelector(`#basket li[data-id="${product.id}"]`);
+        if (existing) {
+            basketQuantity = parseInt(existing.querySelector("em").textContent.split(" ")[0]) + 1;
+        }
+
+        basketAdder(x, product.id, product.price, basketQuantity);
+
         addToBasket(this.parentElement.cloneNode(true));
         this.remove();
     });
-    $p.append($btn);
+    $p.append($btn, br(), br());
 
     return $p;
 }
@@ -66,7 +77,9 @@ function doAbout($main) {
 function doIletisim($main) {
     document.title = "İletişim | " + COMPANY.name;
     let a = article();
-    a.append(h2("İletişim"), img("/img/iletisim.jpg", COMPANY.name),
+    let i = img("/img/iletisim.jpg", COMPANY.name);
+    i.style.objectPosition = "center";
+    a.append(h2("İletişim"), i,
         address(COMPANY.address),
         lnk("https://maps.app.goo.gl/4mFyGQx7jfX2S2vh7", "Haritada Gör", true), br(),
         lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone),
@@ -152,14 +165,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3456);
 });
 
+//sync count on every product place
+//load basket adder if item is in basket
+
 function basketAdder(prevElem, prdId, price, quantity) {
     let priceKey = `#basket li[data-id="${prdId}"] strong`;
     let unitPrice = parseFloat(price);
     let $quantity = em(quantity + " Adet");
 
     let $mb = btn("⚊");
+    $mb.className = "bskbtn";
     $mb.style.visibility = "hidden";
     let $pb = btn("+");
+    $pb.className = "bskbtn";
 
     $mb.addEventListener("click", function () {
         let quantity = parseInt($quantity.textContent);
@@ -203,8 +221,13 @@ function addToBasket(product, quantity = 1) {
         return;
     }
 
-    rmv2(product.querySelector("button"));
-    rmv3(product.querySelectorAll("p"));
+    let elementsToRemove = [];
+    let sibling = product.querySelector("strong").nextSibling;
+    while (sibling) {
+        elementsToRemove.push(sibling);
+        sibling = sibling.nextSibling;
+    }
+    elementsToRemove.forEach(el => el.remove());
 
     let $db = btn("X");
     $db.classList.add("btnDelete");
@@ -229,6 +252,7 @@ function doBasket($body, $f) {
     bi.append(div(), img("/img/basket.png", "Sepet"));
     bi.addEventListener("click", function () {
         window.location.href = "#basket";
+        showBasket(document.getElementById("basket"), document.getElementById("btnShowBasket"));
     });
     $body.append(bi);
 
@@ -531,6 +555,5 @@ function btn(t) {
 
 function rmv(i) { rmv2(document.querySelector(i)); }
 function rmv2(e) { if (e) { e.remove(); } }
-function rmv3(es) { es.forEach(function (e) { e.remove(); }); }
 
 function insertAfter(r, n) { r.insertAdjacentElement("afterend", n); }

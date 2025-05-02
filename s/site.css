@@ -195,7 +195,8 @@ article p {
     cursor: pointer;
 }
 
-#basket ul li button, .bskbtn {
+#basket ul li button,
+.bskbtn {
     display: inline-block;
     background-color: #ffa91e;
     padding-inline: 6px;
@@ -333,6 +334,8 @@ h3 {
     height: 444px;
     overflow: hidden;
     width: 100%;
+    border-top: 8px solid #fff;
+    border-bottom: 19px solid #EDE6DB;
 }
 
 .bigImg img {
@@ -346,12 +349,31 @@ footer .bigImg img {
     object-position: top;
 }
 
+.bigImg div {
+    position: relative;
+    top: -233px;
+    background: #EDE6DB;
+    color: #584629;
+    margin: auto;
+    width: 55%;
+    height: 133px;
+    text-align: center;
+    border-radius: 13px;
+    padding: 21px;
+}
+
 .bigImg button {
     position: relative;
-    top: -123px;
+    top: 10px;
     margin: 0 auto;
-    background-color: #2bbbfc;
+    background-color: #4CAF50;
     font-size: 24px;
+}
+
+.bigImg em {
+    font-size: 18px;
+    line-height: 1.55;
+    display: block;
 }
 
 article address {
@@ -376,7 +398,7 @@ article a {
     top: 55px;
     right: 8px;
     width: 55px;
-    height: 55px;    
+    height: 55px;
     background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 13px;
@@ -396,7 +418,7 @@ article a {
 #basketInfo div {
     color: #fff;
     background: #ffa91e;
-    font-weight: bold;    
+    font-weight: bold;
     border-radius: 50%;
     font-size: 13px;
     position: relative;
@@ -410,9 +432,8 @@ article a {
 }
 
 @media (max-width: 768px) {
-    .bigImg button {
-        top: -89px;
-        font-size: 17px;
+    .bigImg div {
+        width: 89%;
     }
 
     #products {

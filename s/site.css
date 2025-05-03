@@ -217,6 +217,11 @@ article p {
     right: -21px;
 }
 
+.bskbtn,
+.btnDelete {
+    border: 3px solid #ffa91e;
+}
+
 .btnAddToBasket {
     margin: 5px;
 }
@@ -362,7 +367,7 @@ footer .bigImg img {
     background: #EDE6DB;
     color: #584629;
     margin: auto;
-    width: 55%;
+    width: fit-content;
     height: 123px;
     text-align: center;
     border-radius: 13px;

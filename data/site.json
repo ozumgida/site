@@ -43,6 +43,11 @@
       "title": "Site Haritası | Özüm'le Web Sitesi Rehberi",
       "description": "Özüm'le web sitemizdeki tüm sayfalara tek bir yerden hızlıca erişin. Aradığınız bilgilere kolayca ulaşmanız için tasarlanmış site haritamız.",
       "keywords": "Özümle site haritası, Erzincan ürünleri web sitesi navigasyonu, yöresel gıda sitesi rehberi, peynir alışveriş sitesi yapısı"
+    },
+    "404": {
+      "title": "404 - Sayfa Bulunamadı | Özüm'le",
+      "description": "Aradığınız sayfa bulunamadı. Lütfen ana sayfamıza dönerek gezinmeye devam edin.",
+      "keywords": "sayfa bulunamadı, 404"
     }
   },
   "headImgSloganStart": "Erzincan’ın geleneksel eşsiz tatlarını",

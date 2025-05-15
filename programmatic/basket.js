@@ -83,10 +83,10 @@ function calcShip(w) {
     return 168;
   } else if (w <= 10) {
     return 192 / 2;
-  } else if (w <= 15) {
+  } else if (w < 15) {
     return 247 / 2;
   } else {
-    return 250;
+    return 0;
   }
 }
 
@@ -121,12 +121,17 @@ function refreshBasket() {
     let $b = document.querySelector("#basket");
     let $pTotal = p("");
     $pTotal.id = "pTotal";
-    $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (%1 KDV Dahil)";
+    $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
     frag.append($pTotal);
 
     let ship = calcShip(w);
-    let $c = p("Kargo Ücreti: " + ship + " TL (%22 Vergi Dahil)");
-    frag.append($c);
+    if (w < 15) {
+      let $c = p("Kargo Ücreti: " + ship + " TL (Vergiler Dahil)");
+      frag.append($c);
+      let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
+      $e.style.fontSize = "13px";
+      frag.append($e);
+    }
 
     let $total = p("");
     $total.id = "total";

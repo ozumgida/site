@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (key === "index") { break; }
           if (key === "iletisim") { doIletisim($m); break; }
           if (key === "site-haritasi") { doSiteHaritasi($m); break; }
+          if (key === "404") { do404($m); break; }
 
           let a = article();
           let i = img(`/static/img/pages/${key}.jpg`, pd.title);
@@ -299,10 +300,10 @@ function calcShip(w) {
     return 168;
   } else if (w <= 10) {
     return 192 / 2;
-  } else if (w <= 15) {
+  } else if (w < 15) {
     return 247 / 2;
   } else {
-    return 250;
+    return 0;
   }
 }
 
@@ -337,12 +338,17 @@ function refreshBasket() {
     let $b = document.querySelector("#basket");
     let $pTotal = p("");
     $pTotal.id = "pTotal";
-    $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (%1 KDV Dahil)";
+    $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
     frag.append($pTotal);
 
     let ship = calcShip(w);
-    let $c = p("Kargo Ücreti: " + ship + " TL (%22 Vergi Dahil)");
-    frag.append($c);
+    if (w < 15) {
+      let $c = p("Kargo Ücreti: " + ship + " TL (Vergiler Dahil)");
+      frag.append($c);
+      let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
+      $e.style.fontSize = "13px";
+      frag.append($e);
+    }
 
     let $total = p("");
     $total.id = "total";
@@ -434,6 +440,15 @@ function hideBasket() {
 }
 
 function formatPrice(price) { return price.toLocaleString("tr-TR") + " TL"; }
+function do404($m) {
+  let a = article();
+  let i = img("/static/img/pages/404.jpg", "Sayfa Bulunamadı");
+  i.style.objectPosition = "center";
+  a.append(h2("Sayfa Bulunamadı"), i, p("Aradığınız sayfa bulunamadı. Lütfen menüden başka bir sayfayı seçin."), br());
+  $m.append(a);
+  return a;
+}
+
 function doIletisim($m) {
   let a = article();
   let i = img("/static/img/pages/iletisim.jpg", COMPANY.name);
@@ -563,7 +578,7 @@ function doProductInner($p, prd, isLinked) {
     $p.append($n);
 
     let $pr = document.createElement("strong");
-    $pr.innerHTML = `${prd.price} TL <em>(%1 KDV Dahil)</em>`;
+    $pr.innerHTML = `${prd.price} TL <em>(KDV Dahil)</em>`;
     $p.append($pr);
 
     if (isLinked) {

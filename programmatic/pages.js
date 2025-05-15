@@ -1,3 +1,12 @@
+function do404($m) {
+  let a = article();
+  let i = img("/static/img/pages/404.jpg", "Sayfa Bulunamadı");
+  i.style.objectPosition = "center";
+  a.append(h2("Sayfa Bulunamadı"), i, p("Aradığınız sayfa bulunamadı. Lütfen menüden başka bir sayfayı seçin."), br());
+  $m.append(a);
+  return a;
+}
+
 function doIletisim($m) {
   let a = article();
   let i = img("/static/img/pages/iletisim.jpg", COMPANY.name);

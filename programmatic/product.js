@@ -8,7 +8,7 @@ function doProductInner($p, prd, isLinked) {
     $p.append($n);
 
     let $pr = document.createElement("strong");
-    $pr.innerHTML = `${prd.price} TL <em>(%1 KDV Dahil)</em>`;
+    $pr.innerHTML = `${prd.price} TL <em>(KDV Dahil)</em>`;
     $p.append($pr);
 
     if (isLinked) {

@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (key === "index") { break; }
           if (key === "iletisim") { doIletisim($m); break; }
           if (key === "site-haritasi") { doSiteHaritasi($m); break; }
+          if (key === "404") { do404($m); break; }
 
           let a = article();
           let i = img(`/static/img/pages/${key}.jpg`, pd.title);

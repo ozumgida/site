@@ -1,20 +1,20 @@
-function doProductInner($p, product, isLinked) {
-    let $img = img("", product.name);
-    $img.src = "/products/" + product.url + ".jpg";
+function doProductInner($p, prd, isLinked) {
+    let $img = img("", prd.name);
+    $img.src = "/products/" + prd.url + ".jpg";
     $p.append($img);
 
-    let $n = h2(product.name);
-    $img.dataset.url = $n.dataset.url = product.url;
+    let $n = h2(prd.name);
+    $img.dataset.url = $n.dataset.url = prd.url;
     $p.append($n);
 
     let $pr = document.createElement("strong");
-    $pr.innerHTML = `${product.price} TL <em>(%1 KDV Dahil)</em>`;
+    $pr.innerHTML = `${prd.price} TL <em>(%1 KDV Dahil)</em>`;
     $p.append($pr);
 
     if (isLinked) {
         $img.addEventListener("click", fpc);
         $n.addEventListener("click", fpc);
-        $p.append(p(product.shortDesc));
+        $p.append(p(prd.shortDesc));
     }
     else { rmv("main h3"); }
 }
@@ -28,15 +28,15 @@ function doProduct(product, isLinked = true) {
     let $btn = btn("Sepete Ekle");
     $btn.className = "btnAddToBasket";
     $btn.addEventListener("click", fnAddToBasket);
-    $p.append($btn, br(), br());
+    $p.append($btn, br());
     return $p;
 }
 
-function doProducts($body, isRandom = true) {
+function doProducts($body, rand = true) {
     let $p = document.createElement("ul");
     $p.id = "products";
     let items = PRODUCTS;
-    if (isRandom) { items = PRODUCTS.sort(() => 0.5 - Math.random()).slice(0, 3); }
+    if (rand) { items = PRODUCTS.sort(() => 0.5 - Math.random()).slice(0, 3); }
     items.forEach(product => { $p.append(doProduct(product)); });
     $body.append($p);
 }

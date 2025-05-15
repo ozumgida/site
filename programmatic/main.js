@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let d = getData("pages/" + key);
             if (d && d.parts) {
               d.parts.forEach(i => {
-                a.append(h2(i.title), p2(Array.isArray(i.content) ? i.content.join(" ") : i.content.replace(/\n/g,"<br/>"), true));
+                a.append(h2(i.title), p2(Array.isArray(i.content) ? i.content.join(" ") : i.content.replace(/\n/g, "<br/>"), true));
                 if (i.list) {
                   let ul = document.createElement("ul");
                   ul.className = "list";
@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
+    else { do404($m); }
 
     doProducts($m);
   }

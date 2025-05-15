@@ -1,13 +1,57 @@
 {
-    "site": {
-        "headImgSloganStart": "Erzincan’ın geleneksel eşsiz tatlarını",
-        "headImgSloganEnd": "modern dokunuşlarla sofralarınıza getiriyoruz.",
-        "footImgSloganStart": "Erzincan’ın geleneksel eşsiz tatlarını",
-        "footImgSloganEnd": "modern dokunuşlarla sofralarınıza getiriyoruz.",
-        "headSloganBtn": "Ürünlerimizi Görün",
-        "headSloganLnk": "/urunlerimiz.html",
-        "footSloganBtn": "Lezetimizin Hikayesi",
-        "footSloganLnk": "/lezzetimizin-hikayesi.html",
-        "basketWarning": "Satın almak istediğiniz ürünleri sepetinize ekledikten sonra, 'WhatsApp'tan Siparişini İlet' düğmesine tıklayarak kargo ve ödeme bilgilerinizi bize hızlıca gönderebilirsiniz."
+  "pages": {
+    "index": {
+      "title": "Özüm'le | Erzincan'ın Geleneksel Lezzetleri",
+      "description": "Özüm'le, geleneksel Erzincan lezzetlerini titizlikle seçerek modern sofralara taşıyan, nesilden nesile aktarılan tarifleri yaşatan bir aile markasıdır.",
+      "keywords": "özümle, erzincan tulum peyniri, tereyağ, peynir, erzincan organik gıda, doğal peynir, geleneksel erzincan ürünleri"
+    },
+    "urunlerimiz": {
+      "title": "Özüm'le Ürünlerimiz | Erzincan Lezzetleri",
+      "description": "Erzincan Tulum Peyniri'nin eşsiz lezzetini keşfedin. Yüksek rakımlı yaylaların otlarıyla beslenen hayvanlardan elde edilen sütlerle, geleneksel yöntemlerle üretilen peynirlerimiz, sofralarınıza doğallık ve zenginlik katıyor.",
+      "keywords": "Erzincan Tulum Peyniri, geleneksel peynir, el yapımı peynir, doğal tulum peyniri, erzincan yöresel ürünleri"
+    },
+    "lezzetimizin-hikayesi": {
+      "title": "Lezzetimizin Hikayesi | Özüm'le Erzincan Lezzetleri",
+      "description": "Yüzyıllara dayanan Erzincan Tulum Peyniri geleneğini yaşatıyoruz. Dağların temiz havasında, ustalarımızın ellerinde olgunlaşan peynirlerimizin hikayesini keşfedin.",
+      "keywords": "Erzincan peynir geleneği, geleneksel tulum peyniri hikayesi, Anadolu peynir kültürü, yöresel gıda üretimi"
+    },
+    "hakkimizda": {
+      "title": "Hakkımızda | Özüm'le Ailesi",
+      "description": "Özüm'le ailesi olarak, dededen toruna aktarılan geleneksel yöntemlerle, Erzincan'ın bereketli topraklarından sofralarınıza lezzet taşıyoruz. Hikayemizi ve değerlerimizi keşfedin.",
+      "keywords": "Özümle gıda hikayesi, Erzincan aile işletmesi, geleneksel üretim yapan firma, yöresel gıda üreticisi, organik peynir üretimi",
+      "imgPosMobile": "right",
+      "imgPos": "bottom"
+    },
+    "kvkk": {
+      "title": "Kişisel Verilerin Korunması | Özüm'le Gizlilik Politikası",
+      "description": "Özüm'le olarak kişisel verilerinizin güvenliği ve korunması en öncelikli taahhüdümüzdür. KVKK kapsamındaki politikalarımızı inceleyin.",
+      "keywords": "Kişisel veri koruması, KVKK uyumlu e-ticaret, müşteri bilgileri güvenliği, veri güvenliği standartları, gıda sektöründe veri koruması"
+    },
+    "satis-sozlesmesi": {
+      "title": "Mesafeli Satış Sözleşmesi | Özüm'le Yasal Bilgiler",
+      "description": "Alışverişiniz sırasında haklarınızı ve sorumluluklarımızı açıkça belirten mesafeli satış sözleşmemizi inceleyebilirsiniz.",
+      "keywords": "Gıda ürünleri satış sözleşmesi, yasal tüketici hakları, e-ticarette tüketici koruması, peynir alışverişi yasal şartlar",
+      "imgPosMobile": "left",
+      "imgPos": "top"
+    },
+    "iletisim": {
+      "title": "Bize Ulaşın | Özüm'le İletişim Bilgileri",
+      "description": "Sorularınız, önerileriniz veya siparişleriniz için Özüm'le ailesine kolayca ulaşabilirsiniz. Size yardımcı olmaktan mutluluk duyarız.",
+      "keywords": "Özümle gıda iletişim kanalları, Erzincan peyniri sipariş hattı, müşteri hizmetleri iletişim, yöresel ürün sipariş iletişim"
+    },
+    "site-haritasi": {
+      "title": "Site Haritası | Özüm'le Web Sitesi Rehberi",
+      "description": "Özüm'le web sitemizdeki tüm sayfalara tek bir yerden hızlıca erişin. Aradığınız bilgilere kolayca ulaşmanız için tasarlanmış site haritamız.",
+      "keywords": "Özümle site haritası, Erzincan ürünleri web sitesi navigasyonu, yöresel gıda sitesi rehberi, peynir alışveriş sitesi yapısı"
     }
+  },
+  "headImgSloganStart": "Erzincan’ın geleneksel eşsiz tatlarını",
+  "headImgSloganEnd": "modern dokunuşlarla sofralarınıza getiriyoruz",
+  "footImgSloganStart": "Erzincan topraklarının bereketini",
+  "footImgSloganEnd": "çağdaş mutfak anlayışıyla yaşatıyoruz",
+  "headSloganBtn": "Ürünlerimizi Görün",
+  "headSloganLnk": "/urunlerimiz.html",
+  "footSloganBtn": "Lezetimizin Hikayesi",
+  "footSloganLnk": "/lezzetimizin-hikayesi.html",
+  "basketWarning": "Ürünlerinizi sepete ekledikten sonra,<br/>sadece bir tıkla 'WhatsApp'tan Siparişini İlet' seçeneğini kullanarak<br/>kargo ve ödeme bilgilerinizi hızlıca iletebilir,<br/>alışverişinizi kolayca tamamlayabilirsiniz."
 }

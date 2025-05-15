@@ -1,64 +1,16 @@
 {
-    "company": {
-        "name": "Özüm Gıda ve Ticaret",
-        "address": [
-            "Mimar Sinan Mahallesi",
-            "Üsküdar Caddesi No:48",
-            "YEDPA Ticaret Merkezi 1 F",
-            "Ataşehir / İstanbul"
-        ],
-        "phone": "+90 540 906 35 18",
-        "email": "info@ozumgida.com",
-        "instagram": "https://www.instagram.com/ozumlelezzetler/",
-        "facebook": "#",
-        "linkedin": "#",
-        "slogan": "Erzincan’ın geleneksel eşsiz tatlarını modern dokunuşlarla sofralarınıza getiriyoruz.",
-        "description": "Özüm’le, geleneksel Erzincan lezzetlerini özenle seçerek modern sofralara ulaştırmak amacıyla kurulmuş bir aile markasıdır.",
-        "about": [
-            {
-                "title": "Kimiz?",
-                "content": [
-                    "Özüm’le, geleneksel Erzincan lezzetlerini özenle seçerek modern sofralara ulaştırmak amacıyla kurulmuş bir aile markasıdır."
-                ]
-            },
-            {
-                "title": "Misyonumuz",
-                "content": [
-                    "Anadolu'nun zengin lezzet mirasını, doğallığından ve kalitesinden ödün vermeden günümüz sofralarına taşımak.",
-                    "Tüketicilerimize, güvenilir kaynaklardan elde edilmiş, seçkin ve geleneksel lezzetlerle harmanlanmış eşsiz bir deneyim sunmak."
-                ]
-            },
-            {
-                "title": "Vizyonumuz",
-                "content": [
-                    "Yöresel ürünlere olan güveni pekiştiren, özgün ve güçlü bir marka olarak anılmak.",
-                    "Yerel üreticilerimizle el ele büyüyerek, geleneksel tatların gelecek nesillere aktarılmasını sağlamak ve sürdürülebilirliğine katkıda bulunmak."
-                ]
-            },
-            {
-                "title": "İsmimizin Hikayesi",
-                "content": [
-                    "Markamızın adı, kurucularının isimlerinden ilham alır.",
-                    "Aynı zamanda Özüm’le, bu yolculuğa kendi özümüzle, samimiyetimizle ve sorumluluk bilincimizle çıktığımızı simgeler.",
-                    "Marka ismimizle de özgünlüğe ve dürüstlüğe olan bağlılığımızı yansıtmak istedik."
-                ]
-            },
-            {
-                "title": "Ne Yapıyoruz?",
-                "content": [
-                    "Doğallığı, kaliteyi ve lezzeti bir araya getiren ürünleri güvenilir kaynaklardan temin ederek sizlerle buluşturuyoruz.",
-                    "Erzincan'a özgü tulum peyniri ve tereyağı gibi yöresel tatları titizlikle seçiyor, ilk günkü doğallığını koruyarak sofralarınıza ulaştırıyoruz.",
-                    "Kısacası, orijinal kalitelerini koruyarak otantik yöresel lezzetler sunuyoruz."
-                ]
-            },
-            {
-                "title": "Neye İnanıyoruz?",
-                "content": [
-                    "Özüm’le olarak yerel üreticilerin emeğine saygı duyuyor, Anadolunun köklü lezzet mirasını yaşatmayı ve gelecek nesillere aktarmayı önemsiyoruz.",
-                    "Her ürünümüz, markamızın adını taşımanın sorumluluğu ve sizlerin güveniyle yola çıkmaktadır.",
-                    "Bu, yerel üreticileri desteklemeye ve mutfak mirasını korumaya olan bağlılıklarını göstermektedir."
-                ]
-            }
-        ]
-    }
+  "name": "Özüm Gıda ve Ticaret",
+  "address": [
+    "Mimar Sinan Mahallesi",
+    "Üsküdar Caddesi No:48",
+    "YEDPA Ticaret Merkezi 1 F",
+    "Ataşehir / İstanbul"
+  ],
+  "phone": "+90 540 906 35 18",
+  "email": "info@ozumgida.com",
+  "instagram": "https://www.instagram.com/ozumlelezzetler/",
+  "facebook": "#",
+  "linkedin": "#",
+  "slogan": "Erzincan’ın geleneksel eşsiz tatlarını modern dokunuşlarla sofralarınıza getiriyoruz.",
+  "description": "Özüm’le, geleneksel Erzincan lezzetlerini özenle seçerek modern sofralara ulaştırmak amacıyla kurulmuş bir aile markasıdır."
 }

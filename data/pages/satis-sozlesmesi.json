@@ -1,0 +1,36 @@
+{
+  "parts": [
+    {
+      "title": "Sözleşmenin Tarafları",
+      "content": "Bu sözleşme, [Özüm Gıda ve Ticaret] ile [Alıcı Adı ve Soyadı] arasında, 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği gereğince düzenlenmiştir."
+    },
+    {
+      "title": "Tanımlar",
+      "content": "Satıcı: [Özüm Gıda ve Ticaret].\nAlıcı: [Alıcının Adı, Soyadı ve İletişim Bilgileri].\nÜrün: Sözleşme konusu mal veya hizmet.\nWeb Sitesi: [https://ozumle.com]."
+    },
+    {
+      "title": "Sözleşme Konusu",
+      "content": "Bu sözleşmenin konusu, Alıcı’nın Satıcı’ya ait [https://ozumle.com] internet sitesinden elektronik ortamda siparişini yaptığı aşağıda nitelikleri ve satış fiyatı belirtilen ürünün satışı ve teslimi ile ilgili tarafların hak ve yükümlülüklerinin belirlenmesidir."
+    },
+    {
+      "title": "Ürün ve Ödeme Bilgileri",
+      "content": "Sipariş edilen ürünler, ürün özellikleri, toplam satış bedeli ve ödeme bilgileri sipariş ekranında belirtilmiştir. Alıcı, bu bilgileri elektronik ortamda onaylayarak siparişini tamamlamıştır."
+    },
+    {
+      "title": "Teslimat Şartları",
+      "content": "Ürün, Alıcı’nın belirttiği adrese, belirtilen teslimat süresi içerisinde teslim edilir. Teslimat masrafları, aksi belirtilmedikçe Alıcı’ya aittir."
+    },
+    {
+      "title": "İade ve Cayma Hakkı",
+      "content": "6502 sayılı Tüketicinin Korunması Hakkında Kanun’un ilgili maddelerine göre, gıda ürünleri, niteliği itibarıyla bozulma veya son kullanım tarihinin geçme riski taşıdığından cayma hakkı kapsamında iade edilemez. Bu nedenle, satın alınan gıda ürünleri için iade kabul edilmemektedir."
+    },
+    {
+      "title": "Uygulama ve Yetkili Mahkeme",
+      "content": "Bu sözleşmeden doğabilecek uyuşmazlıklarda, Tüketici Hakem Heyetleri ve Tüketici Mahkemeleri yetkilidir."
+    },
+    {
+      "title": "Yürürlülük",
+      "content": "Alıcı, bu sözleşmeyi elektronik ortamda onaylayarak tüm koşulları kabul etmiş sayılır. Sözleşme, onaylanma tarihinde yürürlüğe girer."
+    }
+  ]
+}

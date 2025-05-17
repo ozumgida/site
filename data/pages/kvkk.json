@@ -1,88 +1,83 @@
 {
   "parts": [
     {
-      "title": "Gizlilik Politikası",
+      "title": "KİŞİSEL VERİLERİN KORUNMASI KANUNU (KVKK) AYDINLATMA METNİ",
       "content": [
-        "Özüm’le olarak, kullanıcılarımızın gizliliğini korumak ve kişisel verilerini güvenli bir şekilde işlemek bizim için son derece önemlidir.",
-        "Bu gizlilik politikası, web sitemizi kullandığınızda ve kurumsal WhatsApp hattımız üzerinden bizimle iletişime geçtiğinizde kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır."
+        "İşbu Aydınlatma Metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") kapsamında, veri sorumlusu sıfatıyla [Şirket/Marka Adı] (\"[Web Sitesi Adı]\") tarafından, web sitemiz aracılığıyla yönlendirdiğimiz WhatsApp iletişim hattımız (0540 906 35 18) üzerinden alınan kişisel verilerinizin işlenmesine ilişkin esasları açıklamak amacıyla hazırlanmıştır."
       ]
     },
     {
-      "title": "Toplanan Bilgiler",
+      "title": "1. Veri Sorumlusu",
       "content": [
-        "Web sitemiz üzerinden doğrudan kişisel bilgi toplamıyoruz.",
-        "Ancak, kullanıcılarımızın kurumsal WhatsApp hattımız üzerinden bizimle iletişime geçmesi durumunda aşağıdaki kişisel verileri toplayabiliriz"
+        "Kişisel verileriniz, veri sorumlusu sıfatıyla [Şirket/Marka Adı] tarafından işlenmektedir."
+      ]
+    },
+    {
+      "title": "2. İşlenen Kişisel Veriler",
+      "content": [
+        "WhatsApp hattımız (0540 906 35 18) üzerinden tarafınızca doğrudan paylaşılan aşağıdaki kişisel veriler işlenebilir:"
       ],
       "list": [
-        "Adınız ve soyadınız",
-        "Telefon numaranız",
-        "WhatsApp üzerinden paylaştığınız diğer bilgiler (metin mesajları, görseller, belgeler vb.)"
+        "Kimlik bilgileri (ad, soyad)",
+        "İletişim bilgileri (telefon numarası, e-posta adresi)",
+        "Mesaj içerikleri, görseller, videolar, ses kayıtları (kullanıcının paylaşması halinde)",
+        "Talep ve şikâyet bilgileri",
+        "Sipariş veya hizmete ilişkin tercihleriniz"
       ]
     },
     {
-      "title": "Kişisel Verilerin Kullanım Amaçları",
+      "title": "3. Kişisel Verilerin İşlenme Amaçları",
       "content": [
-        "Kurumsal WhatsApp hattımız üzerinden toplanan kişisel verileri şu amaçlarla kullanıyoruz:"
+        "Toplanan kişisel verileriniz aşağıdaki amaçlarla işlenmektedir:"
       ],
       "list": [
-        "Kullanıcı taleplerini ve sorularını yanıtlamak",
-        "Hizmetlerimizi sağlamak ve kullanıcı memnuniyetini artırmak",
-        "Yasal yükümlülüklere uymak"
+        "Talep ve başvurularınızın değerlendirilmesi",
+        "Ürün ve/veya hizmet sunum süreçlerinin yürütülmesi",
+        "Müşteri destek süreçlerinin yönetimi",
+        "Satış sonrası destek ve memnuniyet süreçlerinin yürütülmesi",
+        "Yasal yükümlülüklerin yerine getirilmesi"
       ]
     },
     {
-      "title": "Kişisel Verilerin Güvenliği",
+      "title": "4. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi",
       "content": [
-        "Kurumsal WhatsApp hattımız üzerinden elde edilen kişisel veriler, güvenli bir şekilde korunmakta ve yalnızca yetkili çalışanlarımız tarafından erişilebilmektedir.",
-        "WhatsApp’ın uçtan uca şifreleme teknolojisi sayesinde mesajlarınız üçüncü şahıslar tarafından görüntülenemez."
-      ]
-    },
-    {
-      "title": "Kişisel Verilerin Paylaşılması",
-      "content": [
-        "WhatsApp üzerinden elde edilen kişisel verilerinizi üçüncü şahıslarla yalnızca şu durumlarda paylaşırız:"
+        "Kişisel verileriniz, yalnızca sizin WhatsApp hattımız (0540 906 35 18) üzerinden bizimle iletişime geçmeniz suretiyle elektronik ortamda toplanmakta olup, aşağıdaki hukuki sebeplere dayanılarak işlenmektedir:"
       ],
       "list": [
-        "Yasal zorunluluklar gereği",
-        "Kullanıcı onayı ile"
+        "Bir sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması (KVKK m.5/2-c)",
+        "Hukuki yükümlülüklerin yerine getirilmesi (KVKK m.5/2-ç)",
+        "Bir hakkın tesisi, kullanılması veya korunması (KVKK m.5/2-e)",
+        "Açık rızanızın bulunması halinde pazarlama faaliyetleri (KVKK m.5/1)"
       ]
     },
     {
-      "title": "Kullanıcı Hakları",
+      "title": "5. Kişisel Verilerin Aktarılması",
       "content": [
-        "Kullanıcılar olarak aşağıdaki haklara sahipsiniz:"
+        "Verileriniz, hizmet alınan WhatsApp uygulaması (Meta Inc.) tarafından yurt dışında bulunan sunucularda işlenebilir. Bu nedenle verileriniz açık rızanıza bağlı olarak yurt dışına aktarılabilir.",
+        "Ayrıca, gerekli görülmesi halinde kanunen yetkili kamu kurum ve kuruluşlarına aktarılabilir."
+      ]
+    },
+    {
+      "title": "6. İlgili Kişinin Hakları",
+      "content": [
+        "KVKK'nın 11. maddesi uyarınca, kişisel verilerinizle ilgili olarak:"
       ],
       "list": [
-        "Kişisel verilerinize erişim talep etme",
-        "Yanlış veya eksik verilerin düzeltilmesini talep etme",
-        "Kişisel verilerinizin silinmesini isteme (yasal yükümlülükler hariç)",
-        "Verilerinizin işlenmesini kısıtlama"
+        "Verilerinizin işlenip işlenmediğini öğrenme",
+        "İşlenmişse buna ilişkin bilgi talep etme",
+        "Amacına uygun kullanılıp kullanılmadığını öğrenme",
+        "Aktarıldığı 3. kişileri bilme",
+        "Eksik veya yanlış işlenmişse düzeltilmesini isteme",
+        "Silinmesini/yok edilmesini isteme",
+        "Düzeltme/silme taleplerinin 3. kişilere bildirilmesini isteme",
+        "Otomatik sistemlerle analiz sonucu aleyhinize bir durum çıkmasına itiraz etme",
+        "Zarara uğramanız halinde tazminat talep etme haklarına sahipsiniz."
       ]
     },
     {
-      "title": "Gizlilik Politikasındaki Değişiklikler",
+      "title": "",
       "content": [
-        "Bu gizlilik politikası, yasal ve hizmetlerimizdeki değişikliklere bağlı olarak zaman zaman güncellenebilir.",
-        "Politikanın son güncellenme tarihini bu sayfada görebilirsiniz."
-      ]
-    },
-    {
-      "title": "İletişim Bilgileri",
-      "content": [
-        "Gizlilik politikamız hakkında sorularınız veya talepleriniz varsa, lütfen bizimle iletişime geçin:"
-      ],
-      "list": [
-        "WhatsApp: 0Xxxxxx",
-        "E-posta: info@ozumgida.com",
-        "Telefon: 0xxxxxx",
-        "Adres: Mimar Sinan Mah. Üsküdar Cad. YEDPA Ticaret Merkezi F 1 Cad. No:48 Ataşehir İstanbul"
-      ]
-    },
-    {
-      "title": "Sonuç",
-      "content": [
-        "Bu gizlilik politikası ile kişisel verilerinizin nasıl işlendiğini ve korunduğunu şeffaf bir şekilde sizlere sunuyoruz.",
-        "Web sitemizi ve kurumsal WhatsApp hattımızı kullanarak bu politikayı kabul etmiş sayılırsınız."
+        "Bu haklarınızı kullanmak için bizimle info@ozumgida.com üzerinden veya doğrudan WhatsApp hattımız (0540 906 35 18) aracılığıyla iletişime geçebilirsiniz."
       ]
     }
   ]

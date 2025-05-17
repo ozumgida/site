@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let a = article();
           let i = img(`/static/img/pages/${key}.jpg`, pd.title);
-          if (IS_MOBILE) { i.style.objectPosition = pd.imgPosMobile || "center"; }
-          else { i.style.objectPosition = pd.imgPos || "center"; }
+          i.style.objectPosition = "center";
           a.append(h2(pd.title.split("|")[0].trim()), i);
 
           (async function () {

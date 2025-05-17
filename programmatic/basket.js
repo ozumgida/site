@@ -59,6 +59,15 @@ function decreaseBasket(prdId, quantity) {
   refreshBasket();
 }
 
+function emptyBasket() {
+  BASKET.forEach(function (p) {
+    cPrd("#products", p.id);
+    cPrd(".prd", p.id);
+  });
+  BASKET = [];
+  refreshBasket();
+}
+
 function removeFromBasket(prdId) {
   BASKET = BASKET.filter(p => p.id !== prdId);
   refreshBasket();
@@ -77,17 +86,11 @@ function cPrdAdd(sel, p) {
 }
 
 function calcShip(w) {
-  if (w <= 3) {
-    return 146;
-  } else if (w <= 5) {
-    return 168;
-  } else if (w <= 10) {
-    return 192 / 2;
-  } else if (w < 15) {
-    return 247 / 2;
-  } else {
-    return 0;
-  }
+  if (w <= 3) { return 146; }
+  else if (w <= 5) { return 168; }
+  else if (w <= 10) { return 192 / 2; }
+  else if (w < 15) { return 247 / 2; }
+  else { return 0; }
 }
 
 function refreshBasket() {
@@ -116,20 +119,34 @@ function refreshBasket() {
   $ul.innerHTML = "";
   rmAfter($ul);
 
+  let $be = document.querySelector("#btnEmptyBasket");
+  if ($be) { $be.style.display = "none"; }
+
   if (BASKET.length > 0) {
     let frag = document.createDocumentFragment();
     let $b = document.querySelector("#basket");
+
+    if ($be) { $be.style.display = "inline-block"; }
+
     let $pTotal = p("");
     $pTotal.id = "pTotal";
     $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
     frag.append($pTotal);
 
+    let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
+    $e.style.fontSize = "13px";
+    $e.style.color = "#333";
+    $e.style.paddingBottom = "8px";
+    $e.style.display = "block";
+    $e.style.marginTop = "-5px";
     let ship = calcShip(w);
     if (w < 15) {
       let $c = p("Kargo Ücreti: " + ship + " TL (Vergiler Dahil)");
       frag.append($c);
-      let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
-      $e.style.fontSize = "13px";
+      frag.append($e);
+    }
+    else {
+      $e.textContent = "Kargonuz ücretsiz.";
       frag.append($e);
     }
 
@@ -138,7 +155,7 @@ function refreshBasket() {
     $total.textContent = "Genel Toplam : " + formatPrice(total + ship);
     frag.append($total);
 
-    $bi.querySelector("em").textContent = formatPrice(total + ship);
+    $bi.querySelector("em").textContent = formatPrice(total);
 
     let $bw = btn("Whatsapp'dan Siparişini İlet");
     $bw.id = "btnOrderFromWhatsapp";
@@ -199,7 +216,13 @@ function doBasket($body, $f) {
     if ($bs.dataset.active === "true") { hideBasket(); }
     else { showBasket(); }
   });
-  $b.append($bs);
+
+  let $be = btn("Sepeti Boşalt");
+  $be.id = "btnEmptyBasket";
+  $be.addEventListener("click", emptyBasket);
+  $be.style.display = "none";
+
+  $b.append($bs, $be);
   $b.append(document.createElement("ul"));
 
   $body.insertBefore($b, $f);

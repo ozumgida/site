@@ -149,7 +149,7 @@ article {
 
 article img {
   width: 100%;
-  height: 333px;
+  height: 477px;
   object-fit: cover;
   object-position: bottom;
   margin-top: 13px;
@@ -243,9 +243,16 @@ button {
 }
 
 #btnShowBasket {
-  background: #60c35f;
   margin-top: 13px;
   margin-bottom: 21px;
+}
+
+#btnShowBasket,
+#btnEmptyBasket {
+  margin: 13px;
+  margin-bottom: 21px;
+  background: #fff;
+  color: #3E8E41;
 }
 
 #basket p {
@@ -295,7 +302,7 @@ h3 {
 #products {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   padding: 34px;
   padding-top: 55px;
 }
@@ -324,7 +331,7 @@ strong em {
 }
 
 #products img {
-  width: 222px;
+  width: 444px;
   margin: 13px;
   border-radius: 21px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -394,6 +401,7 @@ footer .bigImg img {
 article address {
   color: #333;
   padding-top: 13px;
+  margin-bottom: -13px;
 }
 
 article a {
@@ -474,6 +482,22 @@ li button img {
 
 .list li {
   list-style-type: square;
+}
+
+.contact {
+  display: grid;
+  grid-template-columns: 44px 1fr 1fr;
+  gap: 1px
+}
+
+.contact a {
+  margin-top: 13px;
+}
+
+.contact img {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {

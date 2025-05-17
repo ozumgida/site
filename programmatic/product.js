@@ -35,8 +35,7 @@ function doProduct(product, isLinked = true) {
 function doProducts($body, rand = true) {
     let $p = document.createElement("ul");
     $p.id = "products";
-    let items = PRODUCTS;
-    if (rand) { items = PRODUCTS.sort(() => 0.5 - Math.random()).slice(0, 3); }
+    let items = PRODUCTS.slice(0, 4);
     items.forEach(product => { $p.append(doProduct(product)); });
     $body.append($p);
 }

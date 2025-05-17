@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let a = article();
           let i = img(`/static/img/pages/${key}.jpg`, pd.title);
-          if (IS_MOBILE) { i.style.objectPosition = pd.imgPosMobile || "center"; }
-          else { i.style.objectPosition = pd.imgPos || "center"; }
+          i.style.objectPosition = "center";
           a.append(h2(pd.title.split("|")[0].trim()), i);
 
           (async function () {
@@ -277,6 +276,15 @@ function decreaseBasket(prdId, quantity) {
   refreshBasket();
 }
 
+function emptyBasket() {
+  BASKET.forEach(function (p) {
+    cPrd("#products", p.id);
+    cPrd(".prd", p.id);
+  });
+  BASKET = [];
+  refreshBasket();
+}
+
 function removeFromBasket(prdId) {
   BASKET = BASKET.filter(p => p.id !== prdId);
   refreshBasket();
@@ -295,17 +303,11 @@ function cPrdAdd(sel, p) {
 }
 
 function calcShip(w) {
-  if (w <= 3) {
-    return 146;
-  } else if (w <= 5) {
-    return 168;
-  } else if (w <= 10) {
-    return 192 / 2;
-  } else if (w < 15) {
-    return 247 / 2;
-  } else {
-    return 0;
-  }
+  if (w <= 3) { return 146; }
+  else if (w <= 5) { return 168; }
+  else if (w <= 10) { return 192 / 2; }
+  else if (w < 15) { return 247 / 2; }
+  else { return 0; }
 }
 
 function refreshBasket() {
@@ -334,20 +336,34 @@ function refreshBasket() {
   $ul.innerHTML = "";
   rmAfter($ul);
 
+  let $be = document.querySelector("#btnEmptyBasket");
+  if ($be) { $be.style.display = "none"; }
+
   if (BASKET.length > 0) {
     let frag = document.createDocumentFragment();
     let $b = document.querySelector("#basket");
+
+    if ($be) { $be.style.display = "inline-block"; }
+
     let $pTotal = p("");
     $pTotal.id = "pTotal";
     $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
     frag.append($pTotal);
 
+    let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
+    $e.style.fontSize = "13px";
+    $e.style.color = "#333";
+    $e.style.paddingBottom = "8px";
+    $e.style.display = "block";
+    $e.style.marginTop = "-5px";
     let ship = calcShip(w);
     if (w < 15) {
       let $c = p("Kargo Ücreti: " + ship + " TL (Vergiler Dahil)");
       frag.append($c);
-      let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
-      $e.style.fontSize = "13px";
+      frag.append($e);
+    }
+    else {
+      $e.textContent = "Kargonuz ücretsiz.";
       frag.append($e);
     }
 
@@ -356,7 +372,7 @@ function refreshBasket() {
     $total.textContent = "Genel Toplam : " + formatPrice(total + ship);
     frag.append($total);
 
-    $bi.querySelector("em").textContent = formatPrice(total + ship);
+    $bi.querySelector("em").textContent = formatPrice(total);
 
     let $bw = btn("Whatsapp'dan Siparişini İlet");
     $bw.id = "btnOrderFromWhatsapp";
@@ -417,7 +433,13 @@ function doBasket($body, $f) {
     if ($bs.dataset.active === "true") { hideBasket(); }
     else { showBasket(); }
   });
-  $b.append($bs);
+
+  let $be = btn("Sepeti Boşalt");
+  $be.id = "btnEmptyBasket";
+  $be.addEventListener("click", emptyBasket);
+  $be.style.display = "none";
+
+  $b.append($bs, $be);
   $b.append(document.createElement("ul"));
 
   $body.insertBefore($b, $f);
@@ -454,11 +476,16 @@ function doIletisim($m) {
   let a = article();
   let i = img("/static/img/pages/iletisim.jpg", COMPANY.name);
   i.style.objectPosition = "center";
-  a.append(h2("İletişim"), i,
-    address(COMPANY.address),
-    lnk("https://maps.app.goo.gl/4mFyGQx7jfX2S2vh7", "Haritada Gör", true), br(),
-    lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone),
-    lnk("mailto:" + COMPANY.email, COMPANY.email), br());
+  a.append(h2("İletişim"), i, em(COMPANY.legalName), br());
+
+  let $d = div();
+  $d.className = "contact";
+  $d.append(
+    img("/static/img/address.png", "adres"), address(COMPANY.address), br(),
+    img("/static/img/map.png", "harita"), lnk("https://maps.app.goo.gl/4mFyGQx7jfX2S2vh7", "Haritada Gör", true), br(),
+    img("/static/img/phone.png", "telefon"), lnk("tel:" + COMPANY.phone.replace(/ /g, ""), COMPANY.phone), br(),
+    img("/static/img/email.png", "e-posta"), lnk("mailto:" + COMPANY.email, COMPANY.email));
+  a.append($d);
   $m.append(a);
   return a;
 }
@@ -473,6 +500,7 @@ function doSiteHaritasi($m) {
     lnk("/hakkimizda.html", "Hakkımızda"),
     lnk("/lezzetimizin-hikayesi.html", "Lezzetimizin Hikayesi"),
     lnk("/satis-sozlesmesi.html", "Mesafeli Satış Sözleşmesi"),
+    lnk("/gizlilik-politikasi.html", "Gizlilik Politikası"),
     lnk("/kvkk.html", "KVKK Aydınlatma Metni"),
     lnk("/iletisim.html", "İletişim"), br());
   $m.append(a);
@@ -529,9 +557,7 @@ function doHeader($body) {
     $menu.append(m);
     m1.className = m2.className = m3.className = m4.className = "close";
 
-    if (IS_HOME) {
-      $nav.style.height = "133px";
-    }
+    if (IS_HOME) { $nav.style.height = "133px"; }
   }
 
   $menu.append(m1, m2, m3, m4);
@@ -554,16 +580,14 @@ function doFooter($body) {
 
   let $social = div();
   $social.className = "social";
-  $social.append(lnkimg(COMPANY.instagram, "/static/img/instagram.png", "instagram"),
-    lnkimg(COMPANY.facebook, "/static/img/facebook.png", "facebook"),
-    lnkimg(COMPANY.youtube, "/static/img/linkedin.png", "linkedin"),
-    $w);
+  $social.append(lnkimg(COMPANY.instagram, "/static/img/instagram.png", "instagram"), $w);
 
   $f.append(
     br(), br(), $social, br(), br(),
     lnk("mailto:" + COMPANY.email, COMPANY.email), p(COMPANY.name + " © " + new Date().getFullYear()), br(),
     lnk("/satis-sozlesmesi.html", "Uzaktan Satış Sözleşmesi"),
     lnk("/kvkk.html", "KVKK Aydınlatma Metni"),
+    lnk("/gizlilik-politikasi.html", "Gizlilik Politikası"),
     lnk("/site-haritasi.html", "Site Haritası"), getLogo());
 
   $body.append($f);
@@ -606,8 +630,7 @@ function doProduct(product, isLinked = true) {
 function doProducts($body, rand = true) {
     let $p = document.createElement("ul");
     $p.id = "products";
-    let items = PRODUCTS;
-    if (rand) { items = PRODUCTS.sort(() => 0.5 - Math.random()).slice(0, 3); }
+    let items = PRODUCTS.slice(0, 4);
     items.forEach(product => { $p.append(doProduct(product)); });
     $body.append($p);
 }

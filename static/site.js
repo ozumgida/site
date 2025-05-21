@@ -350,7 +350,7 @@ function refreshBasket() {
     $pTotal.textContent = "Ürün Tutarı : " + formatPrice(total) + " (KDV Dahil)";
     frag.append($pTotal);
 
-    let $e = em("15 kg ve üzeri siparişlerde kargo bedavadır.");
+    let $e = em("15 kg ve üzeri siparişlerde kargo ücretsizdir.");
     $e.style.fontSize = "13px";
     $e.style.color = "#333";
     $e.style.paddingBottom = "8px";

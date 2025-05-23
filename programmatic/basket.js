@@ -93,7 +93,7 @@ function calcShip(w) {
   else { return 0; }
 }
 
-function refreshBasket() {
+function getTotals() {
   let total = 0;
   let qp = [];
   let w = 0;
@@ -103,7 +103,11 @@ function refreshBasket() {
     let numPart = parseInt(p.id.replace(/\D/g, ""), 10);
     w += (numPart / 1000) * p.quantity;
   });
+  return { total, qp, w };
+}
 
+function refreshBasket() {
+  let { total, qp, w } = getTotals();
   history.replaceState(null, "", `?${qp.join("&")}`);
 
   let $bi = document.getElementById("basketInfo");
@@ -162,8 +166,14 @@ function refreshBasket() {
     $bw.addEventListener("click", function () {
       let phone = COMPANY.phone;
       let message = "Merhaba,\n\n";
-      BASKET.forEach(function (p) { message += `${p.quantity} ${p.name}\n`; });
-      message += "\nSatın almak istiyorum.";
+      BASKET.forEach(function (p) { message += `${p.quantity} ${p.name} (${p.price} x ${p.quantity})\n`; });
+
+      let { total, qp, w } = getTotals();
+      let ship = calcShip(w);
+      message += "\n\nÜrün Tutarı : " + formatPrice(total);
+      message += "\nKargo Ücreti :" + formatPrice(ship);
+      message += "\nGenel Toplam :" + formatPrice(total + ship);
+      message += "\n\nSatın almak istiyorum.";
 
       let encoded = encodeURIComponent(message);
       if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }

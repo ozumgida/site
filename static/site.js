@@ -404,6 +404,10 @@ function refreshBasket() {
     });
     frag.append($bw);
 
+    let no_wa = p2("WhatsApp kullanmıyorsanız, sipariş ve sorularınız için <a target='_blank' href='mailto:info@ozumgida.com'>info@ozumgida.com</a> adresimize yazabilirsiniz.") ;
+    no_wa.id = "no_wa";
+    frag.append(no_wa);
+
     $b.append(frag);
 
     frag = document.createDocumentFragment();

@@ -88,7 +88,7 @@ function doHeader($body) {
   let m2 = mi("Ürünlerimiz", "/urunlerimiz.html");
   let m3 = mi("Lezzetimizin Hikayesi", "/lezzetimizin-hikayesi.html");
   let m4 = mi("İletişim", "/iletisim.html");
-  if (IS_MOBILE) {
+  if (IS_M) {
     $menu.append(m);
     m1.className = m2.className = m3.className = m4.className = "close";
 

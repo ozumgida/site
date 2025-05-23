@@ -242,7 +242,7 @@ function hideBasket() {
   let b = document.getElementById("btnShowBasket");
   b.dataset.active = "false";
   b.innerHTML = "Sepeti Göster";
-  p.style.height = IS_MOBILE ? "260px" : "220px";
+  p.style.height = IS_M ? "260px" : "220px";
 }
 
 function formatPrice(price) { return price.toLocaleString("tr-TR") + " TL"; }

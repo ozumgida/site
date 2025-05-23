@@ -3,12 +3,13 @@ var COMPANY;
 var SITE;
 var BASKET = [];
 
+var IS_M = window.innerWidth < 777;
 var IS_HOME = window.location.pathname == "/" || window.location.pathname.includes("/index.html");
 var IS_MOBILE = (function() {
   var ua = navigator.userAgent || navigator.vendor || navigator.platform || window.opera || "";
   var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|MacIntel|Tablet/i.test(ua);
   var touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  return mobile || touch || window.innerWidth < 777;
+  return mobile || touch;
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let $m = document.createElement("main");
   if (IS_HOME) {
     let part = imgWithBtn("/static/img/pages/header.jpg", SITE.headSloganBtn, SITE.headSloganLnk, [SITE.headImgSloganStart, SITE.headImgSloganEnd]);
-    if (IS_MOBILE) { part.style.marginTop = "-128px"; }
+    if (IS_M) { part.style.marginTop = "-128px"; }
     else { part.style.marginTop = "-48px"; }
     $body.append(part);
   }
@@ -464,7 +465,7 @@ function hideBasket() {
   let b = document.getElementById("btnShowBasket");
   b.dataset.active = "false";
   b.innerHTML = "Sepeti Göster";
-  p.style.height = IS_MOBILE ? "260px" : "220px";
+  p.style.height = IS_M ? "260px" : "220px";
 }
 
 function formatPrice(price) { return price.toLocaleString("tr-TR") + " TL"; }
@@ -558,7 +559,7 @@ function doHeader($body) {
   let m2 = mi("Ürünlerimiz", "/urunlerimiz.html");
   let m3 = mi("Lezzetimizin Hikayesi", "/lezzetimizin-hikayesi.html");
   let m4 = mi("İletişim", "/iletisim.html");
-  if (IS_MOBILE) {
+  if (IS_M) {
     $menu.append(m);
     m1.className = m2.className = m3.className = m4.className = "close";
 

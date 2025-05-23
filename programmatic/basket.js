@@ -176,8 +176,11 @@ function refreshBasket() {
       message += "\n\nSatın almak istiyorum.";
 
       let encoded = encodeURIComponent(message);
-      if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
-      else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }
+
+      window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank");
+
+      /*if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
+      else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }*/
     });
     frag.append($bw);
 

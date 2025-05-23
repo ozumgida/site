@@ -5,11 +5,13 @@ var BASKET = [];
 
 var IS_M = window.innerWidth < 777;
 var IS_HOME = window.location.pathname == "/" || window.location.pathname.includes("/index.html");
-var IS_MOBILE = (function() {
-  var ua = navigator.userAgent || navigator.vendor || navigator.platform || window.opera || "";
-  var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|MacIntel|Tablet/i.test(ua);
-  var touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  return mobile || touch;
+var IS_MOBILE = (function () {
+  var dataString = [navigator.userAgent, navigator.vendor, navigator.platform, window.opera, ''].join(' ');
+  var mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Mobi|iOS|CriOS|FxiOS|CFNetwork|UCBrowser|Silk|Kindle|Tablet|Mac.*Mobile|MacIntel|Phone|samsung|SAMSUNG/i;
+  var isMobileDevice = mobileRegex.test(dataString);
+  var hasTouchPoints = navigator.maxTouchPoints > 0;
+  var hasTouchEvents = 'ontouchstart' in window || 'ontouchend' in document;
+  return isMobileDevice || hasTouchPoints || hasTouchEvents;
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -399,8 +401,11 @@ function refreshBasket() {
       message += "\n\nSatın almak istiyorum.";
 
       let encoded = encodeURIComponent(message);
-      if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
-      else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }
+
+      window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank");
+
+      /*if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
+      else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }*/
     });
     frag.append($bw);
 

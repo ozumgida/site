@@ -501,6 +501,18 @@ li button img {
   margin-bottom: 0;
 }
 
+#no_wa {
+  color: #fff;
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+#no_wa a {
+  color: #3E8E41;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 768px) {
   .bigImg div {
     width: 89%;

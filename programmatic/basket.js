@@ -164,7 +164,7 @@ function refreshBasket() {
     let $bw = btn("Whatsapp'dan Siparişini İlet");
     $bw.id = "btnOrderFromWhatsapp";
     $bw.addEventListener("click", function () {
-      let phone = COMPANY.phone;
+      let phone = COMPANY.phone.replace(/\D/g, "");
       let message = "Merhaba,\n\n";
       BASKET.forEach(function (p) { message += `${p.quantity} ${p.name} (${p.price} x ${p.quantity})\n`; });
 
@@ -177,10 +177,8 @@ function refreshBasket() {
 
       let encoded = encodeURIComponent(message);
 
-      window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank");
-
-      /*if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
-      else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }*/
+      if (IS_MOBILE) { window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank"); }
+      else { window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`, "_blank"); }
     });
     frag.append($bw);
 

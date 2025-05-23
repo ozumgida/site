@@ -393,7 +393,7 @@ function refreshBasket() {
 
       let { total, qp, w } = getTotals();
       let ship = calcShip(w);
-      message += "\n\nÜrün Tutarı : " + formatPrice(total);
+      message += "\nÜrün Tutarı : " + formatPrice(total);
       message += "\nKargo Ücreti :" + formatPrice(ship);
       message += "\nGenel Toplam :" + formatPrice(total + ship);
       message += "\n\nSatın almak istiyorum.";
@@ -404,7 +404,7 @@ function refreshBasket() {
     });
     frag.append($bw);
 
-    let no_wa = p2("WhatsApp kullanmıyorsanız,<br/>sipariş ve sorularınız için <a target='_blank' href='mailto:info@ozumgida.com'>info@ozumgida.com</a> adresimize yazabilirsiniz.") ;
+    let no_wa = p2("WhatsApp kullanmıyorsanız,<br/>sipariş ve sorularınız için bize <a target='_blank' href='mailto:info@ozumgida.com'>info@ozumgida.com</a> adresimizden ulaşabilirsiniz.") ;
     no_wa.id = "no_wa";
     frag.append(no_wa);
 

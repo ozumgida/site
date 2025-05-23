@@ -56,7 +56,7 @@ function mi(t, u) {
 function doHeader($body) {
   let $header = document.createElement("header");
   let $logo = getLogo();
-  $logo.addEventListener("click", function () { window.location.href = "/index.html" + window.location.search; });
+  $logo.addEventListener("click", function () { window.location.href = "/" + window.location.search; });
   $header.append($logo);
   $body.insertBefore($header, $body.firstChild);
 

@@ -311,7 +311,8 @@ function cPrdAdd(sel, p) {
 }
 
 function calcShip(w) {
-  if (w <= 3) { return 146; }
+  if (w < 0.6) { return 123; }
+  else if (w <= 3) { return 146; }
   else if (w <= 5) { return 168; }
   else if (w <= 10) { return 192 / 2; }
   else if (w < 15) { return 247 / 2; }
